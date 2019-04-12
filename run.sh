@@ -36,9 +36,7 @@ cp /home/steam/crontab /ark/template/crontab
 [ ! -d /ark/staging ] && mkdir /ark/staging
 
 [ ! -f /ark/Game.ini ] && cp server/ShooterGame/Saved/Config/LinuxServer/Game.ini Game.ini
-# [ ! -L /ark/Game.ini ] && ln -s server/ShooterGame/Saved/Config/LinuxServer/Game.ini Game.ini
 [ ! -f /ark/GameUserSettings.ini ] && cp server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini GameUserSettings.ini
-# [ ! -L /ark/GameUserSettings.ini ] && ln -s server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini GameUserSettings.ini
 [ ! -f /ark/crontab ] && cp /ark/template/crontab /ark/crontab
 
 if [ ! -d /ark/server  ] || [ ! -f /ark/server/version.txt ];then
