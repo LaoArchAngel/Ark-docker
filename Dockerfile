@@ -24,7 +24,7 @@ ENV SESSIONNAME="Ark Docker" \
  
 # Install dependencies 
 RUN apt-get update &&\ 
-    apt-get install -y curl lib32gcc1 lsof git
+    apt-get install -y curl lib32gcc1 lsof git cron
     
 RUN adduser \ 
 	--disabled-login \ 
