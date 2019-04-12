@@ -24,9 +24,16 @@ ENV SESSIONNAME="Ark Docker" \
  
 # Install dependencies 
 RUN apt-get update &&\ 
-    apt-get install -y curl lib32gcc1 lsof git \
-    && adduser -u $ARK_UID -s /bin/bash -U steam
+    apt-get install -y curl lib32gcc1 lsof git
     
+RUN adduser \ 
+	--disabled-login \ 
+	--shell /bin/bash \ 
+	--gecos "" \ 
+	steam
+# Add to sudo group
+RUN usermod -a -G sudo steam
+
 # Copy & rights to folders
 COPY run.sh /home/steam/run.sh
 COPY user.sh /home/steam/user.sh
