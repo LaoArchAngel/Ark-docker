@@ -1,4 +1,4 @@
-FROM ubuntu:latests
+FROM ubuntu:18.04
 MAINTAINER jvleeuwen
 
 # Var for first config
