@@ -26,8 +26,17 @@ chown -R steam:steam /ark /home/steam
 chmod -R 777 /root/
 
 # Starting cron
-echo "Starting crond..."
-crond
+# If there is uncommented line in the file
+CRONNUMBER=`grep -v "^#" /ark/crontab | wc -l`
+if [ $CRONNUMBER -gt 0 ]; then
+	echo "Loading crontab..."
+	# We load the crontab file if it exist.
+	crontab /ark/crontab
+	# Cron is attached to this process
+	sudo cron -f &
+else
+	echo "No crontab set."
+fi
 
 # Launch run.sh with user steam
 su -p -c /home/steam/run.sh steam
