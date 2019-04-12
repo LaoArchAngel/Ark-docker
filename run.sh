@@ -56,8 +56,8 @@ fi
 
 #copying the actual configs
 echo "Copying the config files..."
-cp Game.ini server/ShooterGame/Saved/Config/LinuxServer/Game.ini
-cp GameUserSettings.ini server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
+[ -f /ark/Game.ini ] && cp /ark/Game.ini server/ShooterGame/Saved/Config/LinuxServer/Game.ini
+[ ! -f /ark/GameUserSettings.ini && cp /ark/GameUserSettings.ini server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
 
 # Installing crontab for user steam
 echo "Loading crontab..."
