@@ -34,8 +34,11 @@ cp /home/steam/crontab /ark/template/crontab
 [ ! -d /ark/log ] && mkdir /ark/log
 [ ! -d /ark/backup ] && mkdir /ark/backup
 [ ! -d /ark/staging ] && mkdir /ark/staging
-[ ! -L /ark/Game.ini ] && ln -s server/ShooterGame/Saved/Config/LinuxServer/Game.ini Game.ini
-[ ! -L /ark/GameUserSettings.ini ] && ln -s server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini GameUserSettings.ini
+
+[ ! -f /ark/Game.ini ] && cp server/ShooterGame/Saved/Config/LinuxServer/Game.ini Game.ini
+# [ ! -L /ark/Game.ini ] && ln -s server/ShooterGame/Saved/Config/LinuxServer/Game.ini Game.ini
+[ ! -f /ark/GameUserSettings.ini ] && cp server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini GameUserSettings.ini
+# [ ! -L /ark/GameUserSettings.ini ] && ln -s server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini GameUserSettings.ini
 [ ! -f /ark/crontab ] && cp /ark/template/crontab /ark/crontab
 
 if [ ! -d /ark/server  ] || [ ! -f /ark/server/version.txt ];then
@@ -53,6 +56,11 @@ else
 	fi
 fi
 
+#copying the actual configs
+echo "Copying the config files..."
+cp Game.ini server/ShooterGame/Saved/Config/LinuxServer/Game.ini
+cp GameUserSettings.ini server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
+
 # Installing crontab for user steam
 echo "Loading crontab..."
 cat /ark/crontab | crontab -
@@ -63,6 +71,7 @@ if [ $UPDATEONSTART -eq 0 ]; then
 else
 	arkmanager start
 fi
+
 
 
 # Stop server in case of signal INT or TERM
