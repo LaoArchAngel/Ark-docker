@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER jvleeuwen
+# MAINTAINER jvleeuwen
 
 # Var for first config
 ENV SESSIONNAME="Ark Docker" \
