@@ -24,7 +24,7 @@ RUN yum -y install glibc.i686 libstdc++.i686 git lsof bzip2 cronie perl-Compress
 ## Prepare steam user
 RUN adduser -u $ARK_UID -s /bin/bash -U steam
  
-RUN usermod -a -G sudo steam
+RUN usermod -a -G wheel steam
 
 # Copy & rights to folders
 COPY run.sh /home/steam/run.sh
