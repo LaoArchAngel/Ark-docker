@@ -17,7 +17,7 @@ ENV SESSIONNAME="Ark Docker" \
     TZ=UTC
 
 ## Install dependencies
-RUN yum -y install glibc.i686 libstdc++.i686 git lsof bzip2 cronie perl-Compress-Zlib curl bash coreutils findutils perl rsync sed tar \
+RUN yum -y install glibc.i686 libstdc++.i686 git lsof bzip2 cronie perl-Compress-Zlib curl bash findutils perl rsync sed tar \
  && yum clean all
 
 
