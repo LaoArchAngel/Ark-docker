@@ -33,7 +33,7 @@ if [ $CRONNUMBER -gt 0 ]; then
 	# We load the crontab file if it exist.
 	crontab /ark/crontab
 	# Cron is attached to this process
-	sudo crond -f &
+	sudo crond -np &
 else
 	echo "No crontab set."
 fi
