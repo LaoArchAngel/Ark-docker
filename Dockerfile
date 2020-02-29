@@ -26,23 +26,20 @@ RUN adduser -u $ARK_UID -s /bin/bash -U steam
  
 RUN usermod -a -G wheel steam
 
-# Copy & rights to folders
-COPY run.sh /home/steam/run.sh
-COPY user.sh /home/steam/user.sh
-COPY crontab /home/steam/crontab
-COPY arkmanager-user.cfg /home/steam/arkmanager.cfg
-
-RUN chmod 777 /home/steam/run.sh \
- && chmod 777 /home/steam/user.sh
-
 ## Always get the latest version of ark-server-tools
 RUN curl -sL http://git.io/vtf5N | sudo bash -s steam
+RUN (crontab -l 2>/dev/null; echo "* 3 * * Mon yes | /usr/local/bin/arkmanager upgrade-tools >> /ark/log/arkmanager-upgrade.log 2>&1") | crontab -
 
-RUN (crontab -l 2>/dev/null; echo "* 3 * * Mon yes | arkmanager upgrade-tools >> /ark/log/arkmanager-upgrade.log 2>&1") | crontab -
 
+## Install SteamCmd ##
 RUN mkdir /home/steam/steamcmd \
   && cd /home/steam/steamcmd \
   && curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
+
+
+# Copy & rights to folders
+COPY crontab /home/steam/crontab
+COPY arkmanager-user.cfg /home/steam/arkmanager.cfg
 
 RUN mkdir /ark \
  && chown steam /ark && chmod 755 /ark
@@ -53,14 +50,23 @@ COPY arkmanager-system.cfg /etc/arkmanager/arkmanager.cfg
 # Define default config file in /etc/arkmanager
 COPY instance.cfg /etc/arkmanager/instances/main.cfg
 
+## PORTS ##
 EXPOSE ${STEAMPORT} 32330 ${SERVERPORT}
-# Add UDP
 EXPOSE ${STEAMPORT}/udp ${SERVERPORT}/udp
 
 VOLUME  /ark
 
 # Change the working directory to /ark
 WORKDIR /ark
+
+
+## Startup Scripts ##
+COPY run.sh /home/steam/run.sh
+COPY user.sh /home/steam/user.sh
+
+RUN chmod 777 /home/steam/run.sh \
+ && chmod 777 /home/steam/user.sh
+
 
 # Update game launch the game.
 ENTRYPOINT ["/home/steam/user.sh"]
