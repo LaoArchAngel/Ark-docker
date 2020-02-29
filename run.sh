@@ -59,9 +59,6 @@ echo "Copying the config files..."
 [ -f /ark/Game.ini ] && cp /ark/Game.ini server/ShooterGame/Saved/Config/LinuxServer/Game.ini
 [ -f /ark/GameUserSettings.ini ] && cp /ark/GameUserSettings.ini server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
 
-# Installing crontab for user steam
-echo "Loading crontab..."
-cat /ark/crontab | crontab -
 
 # Launching ark server
 if [ $UPDATEONSTART -eq 0 ]; then
@@ -70,6 +67,11 @@ else
 	arkmanager start
 fi
 
+
+# Installing crontab for user steam
+echo "Loading crontab..."
+#cat /ark/crontab | crontab -
+crontab /ark/crontab
 
 
 # Stop server in case of signal INT or TERM

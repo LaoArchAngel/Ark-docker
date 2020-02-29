@@ -31,7 +31,7 @@ CRONNUMBER=$(grep -v "^#" /ark/crontab | wc -l)
 if [ $CRONNUMBER -gt 0 ]; then
 	echo "Loading crontab..."
 	# We load the crontab file if it exist.
-	crontab /ark/crontab
+	# crontab /ark/crontab
 	# Cron is attached to this process
 	sudo crond -np &
 else
