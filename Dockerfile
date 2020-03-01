@@ -1,15 +1,11 @@
 FROM centos:latest
 
 # Var for first config
-ENV SESSIONNAME="Ark Docker" \
-    SERVERMAP="TheIsland" \
-    SERVERPASSWORD="" \
+ENV SERVERPASSWORD="" \
     ADMINPASSWORD="adminpassword" \
     MAX_PLAYERS=70 \
     UPDATEONSTART=1 \
     BACKUPONSTART=1 \
-    SERVERPORT=27015 \
-    STEAMPORT=7777 \
     BACKUPONSTOP=1 \
     WARNONSTOP=1 \
     ARK_UID=1000 \
@@ -22,9 +18,9 @@ RUN yum -y install glibc.i686 libstdc++.i686 git lsof bzip2 cronie perl-Compress
 
 
 ## Prepare steam user
-RUN adduser -u $ARK_UID -s /bin/bash -U steam
- 
+RUN adduser -u $ARK_UID -s /bin/bash -U steam 
 RUN usermod -a -G wheel steam
+
 
 ## Always get the latest version of ark-server-tools
 RUN curl -sL http://git.io/vtf5N | sudo bash -s steam
@@ -37,26 +33,28 @@ RUN mkdir /home/steam/steamcmd \
   && curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
 
 
-# Copy & rights to folders
+## Copy & rights to folders
 COPY crontab /home/steam/crontab
 COPY arkmanager-user.cfg /home/steam/arkmanager.cfg
 
 RUN mkdir /ark \
  && chown steam /ark && chmod 755 /ark
 
-# Define default config file in /etc/arkmanager
+
+## Define default config file in /etc/arkmanager
 COPY arkmanager-system.cfg /etc/arkmanager/arkmanager.cfg
 
-# Define default config file in /etc/arkmanager
+
+## Define default config file in /etc/arkmanager
 COPY instance.cfg /etc/arkmanager/instances/main.cfg
 
-## PORTS ##
-EXPOSE ${STEAMPORT} 32330 ${SERVERPORT}
-EXPOSE ${STEAMPORT}/udp ${SERVERPORT}/udp
 
-VOLUME  /ark
+## Volumes
+VOLUME /etc/arkmanager/instances
+VOLUME /ark
 
-# Change the working directory to /ark
+
+## Change the working directory to /ark
 WORKDIR /ark
 
 
