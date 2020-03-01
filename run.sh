@@ -11,12 +11,12 @@ export TERM=linux
 function stop {
 	if [ ${BACKUPONSTOP} -eq 1 ] && [ "$(ls -A server/ShooterGame/Saved/SavedArks)" ]; then
 		echo "[Backup on stop]"
-		arkmanager backup
+		arkmanager backup @all
 	fi
 	if [ ${WARNONSTOP} -eq 1 ];then 
-	    arkmanager stop --warn
+	    arkmanager stop --warn @all
 	else
-	    arkmanager stop
+	    arkmanager stop @all
 	fi
 	exit
 }
@@ -39,18 +39,18 @@ cp /home/steam/crontab /ark/template/crontab
 [ ! -f /ark/GameUserSettings.ini ] && [ -f server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini GameUserSettings.ini
 [ ! -f /ark/crontab ] && cp /ark/template/crontab /ark/crontab
 
-if [ ! -d /ark/server  ] || [ ! -f /ark/server/version.txt ];then
+if [ ! -d /ark/server  ] || [ ! -f /ark/server/PackageInfo.bin ];then
 	echo "No game files found. Installing..."
 	mkdir -p /ark/server/ShooterGame/Saved/SavedArks
 	mkdir -p /ark/server/ShooterGame/Content/Mods
 	mkdir -p /ark/server/ShooterGame/Binaries/Linux/
 	touch /ark/server/ShooterGame/Binaries/Linux/ShooterGameServer
-	arkmanager install
+	arkmanager install @all
 	# Create mod dir
 else
 	if [ ${BACKUPONSTART} -eq 1 ] && [ "$(ls -A server/ShooterGame/Saved/SavedArks/)" ]; then
 		echo "[Backup]"
-		arkmanager backup
+		arkmanager backup @all
 	fi
 fi
 
@@ -62,9 +62,9 @@ echo "Copying the config files..."
 
 # Launching ark server
 if [ $UPDATEONSTART -eq 0 ]; then
-	arkmanager start --noautoupdate
+	arkmanager start --noautoupdate @all
 else
-	arkmanager start
+	arkmanager start @all
 fi
 
 
