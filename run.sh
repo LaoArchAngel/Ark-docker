@@ -39,7 +39,7 @@ cp /home/steam/crontab /ark/template/crontab
 [ ! -f /ark/GameUserSettings.ini ] && [ -f server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini GameUserSettings.ini
 [ ! -f /ark/crontab ] && cp /ark/template/crontab /ark/crontab
 
-if [ ! -d /ark/server  ] || [ ! -f /ark/server/version.txt ];then
+if [ ! -d /ark/server  ] || [ ! -f /ark/server/PackageInfo.bin ];then
 	echo "No game files found. Installing..."
 	mkdir -p /ark/server/ShooterGame/Saved/SavedArks
 	mkdir -p /ark/server/ShooterGame/Content/Mods
