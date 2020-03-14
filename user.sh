@@ -27,7 +27,7 @@ chmod -R 777 /root/
 
 # Starting cron
 # If there is uncommented line in the file
-CRONNUMBER=$(grep -v "^#" /ark/crontab | wc -l)
+CRONNUMBER=$(grep -v "^#" /ark/config/crontab | wc -l)
 if [ $CRONNUMBER -gt 0 ]; then
 	echo "Loading crontab..."
 	# We load the crontab file if it exist.

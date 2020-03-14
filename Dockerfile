@@ -55,7 +55,11 @@ COPY instance.cfg /etc/arkmanager/instances/main.cfg
 EXPOSE ${STEAMPORT} 32330 ${SERVERPORT}
 EXPOSE ${STEAMPORT}/udp ${SERVERPORT}/udp
 
-VOLUME  /ark
+VOLUME /ark/config
+VOLUME /ark/server
+VOLUME /ark/server/ShooterGame/Saved
+VOLUME /ark/backup
+VOLUME /ark/staging
 
 # Change the working directory to /ark
 WORKDIR /ark

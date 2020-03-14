@@ -30,14 +30,14 @@ cd /ark
 cp /home/steam/arkmanager.cfg /ark/template/arkmanager.cfg
 cp /home/steam/crontab /ark/template/crontab
 # Creating directory tree && symbolic link
-[ ! -f /ark/arkmanager.cfg ] && cp /home/steam/arkmanager.cfg /ark/arkmanager.cfg
+[ ! -f /ark/config/arkmanager.cfg ] && cp /home/steam/arkmanager.cfg /ark/config/arkmanager.cfg
 [ ! -d /ark/log ] && mkdir /ark/log
 [ ! -d /ark/backup ] && mkdir /ark/backup
 [ ! -d /ark/staging ] && mkdir /ark/staging
 
-[ ! -f /ark/Game.ini ] && [ -f server/ShooterGame/Saved/Config/LinuxServer/Game.ini ] && cp server/ShooterGame/Saved/Config/LinuxServer/Game.ini Game.ini
-[ ! -f /ark/GameUserSettings.ini ] && [ -f server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini GameUserSettings.ini
-[ ! -f /ark/crontab ] && cp /ark/template/crontab /ark/crontab
+[ ! -f /ark/config/Game.ini ] && [ -f server/ShooterGame/Saved/Config/LinuxServer/Game.ini ] && cp server/ShooterGame/Saved/Config/LinuxServer/Game.ini /ark/config/Game.ini
+[ ! -f /ark/config/GameUserSettings.ini ] && [ -f server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini /ark/config/GameUserSettings.ini
+[ ! -f /ark/config/crontab ] && cp /ark/template/crontab /ark/config/crontab
 
 if [ ! -d /ark/server  ] || [ ! -f /ark/server/PackageInfo.bin ];then
 	echo "No game files found. Installing..."
@@ -56,8 +56,8 @@ fi
 
 #copying the actual configs
 echo "Copying the config files..."
-[ -f /ark/Game.ini ] && cp /ark/Game.ini server/ShooterGame/Saved/Config/LinuxServer/Game.ini
-[ -f /ark/GameUserSettings.ini ] && cp /ark/GameUserSettings.ini server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
+[ -f /ark/config/Game.ini ] && cp /ark/config/Game.ini server/ShooterGame/Saved/Config/LinuxServer/Game.ini
+[ -f /ark/config/GameUserSettings.ini ] && cp /ark/config/GameUserSettings.ini server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
 
 
 # Launching ark server
@@ -71,7 +71,7 @@ fi
 # Installing crontab for user steam
 echo "Loading crontab..."
 #cat /ark/crontab | crontab -
-crontab /ark/crontab
+crontab /ark/config/crontab
 
 
 # Stop server in case of signal INT or TERM
