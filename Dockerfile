@@ -3,6 +3,7 @@ FROM centos:latest
 # Var for first config
 ENV SESSIONNAME="Ark Docker" \
     SERVERMAP="TheIsland" \
+    SAVEDIR="Main" \
     SERVERPASSWORD="" \
     ADMINPASSWORD="adminpassword" \
     MAX_PLAYERS=70 \
