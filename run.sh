@@ -81,3 +81,5 @@ trap stop TERM
 
 read < /tmp/FIFO &
 wait
+
+arkmanager stop @all --saveworld
