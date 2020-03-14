@@ -75,7 +75,7 @@ crontab /ark/config/crontab
 
 
 # Stop server in case of signal INT or TERM
-echo "Waiting..."
+echo "Server Finished Loading!  Waiting for stop..."
 trap stop INT
 trap stop TERM
 
