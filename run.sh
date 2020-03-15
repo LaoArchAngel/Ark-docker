@@ -9,7 +9,7 @@ mkfifo /tmp/FIFO
 export TERM=linux
 
 function stop {
-	if [ ${BACKUPONSTOP} -eq 1 ] && [ "$(ls -A server/ShooterGame/Saved/SavedArks)" ]; then
+	if [ ${BACKUPONSTOP} -eq 1 ] && [ "$(ls -A /ark/server/install/ShooterGame/Saved/SavedArks)" ]; then
 		echo "[Backup on stop]"
 		arkmanager backup
 	fi
@@ -35,8 +35,8 @@ cp /home/steam/crontab /ark/template/crontab
 [ ! -d /ark/backup ] && mkdir /ark/backup
 [ ! -d /ark/server/staging ] && mkdir -p /ark/server/staging
 
-[ ! -f /ark/config/Game.ini ] && [ -f server/ShooterGame/Saved/Config/LinuxServer/Game.ini ] && cp server/ShooterGame/Saved/Config/LinuxServer/Game.ini /ark/config/Game.ini
-[ ! -f /ark/config/GameUserSettings.ini ] && [ -f server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini /ark/config/GameUserSettings.ini
+[ ! -f /ark/config/Game.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini ] && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini /ark/config/Game.ini
+[ ! -f /ark/config/GameUserSettings.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini /ark/config/GameUserSettings.ini
 [ ! -f /ark/config/crontab ] && cp /ark/template/crontab /ark/config/crontab
 
 if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ];then
@@ -48,7 +48,7 @@ if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ]
 	arkmanager install
 	# Create mod dir
 else
-	if [ ${BACKUPONSTART} -eq 1 ] && [ "$(ls -A server/ShooterGame/Saved/SavedArks/)" ]; then
+	if [ ${BACKUPONSTART} -eq 1 ] && [ "$(ls -A /ark/server/install/ShooterGame/Saved/SavedArks/)" ]; then
 		echo "[Backup]"
 		arkmanager backup
 	fi
@@ -56,8 +56,8 @@ fi
 
 #copying the actual configs
 echo "Copying the config files..."
-[ -f /ark/config/Game.ini ] && cp /ark/config/Game.ini server/ShooterGame/Saved/Config/LinuxServer/Game.ini
-[ -f /ark/config/GameUserSettings.ini ] && cp /ark/config/GameUserSettings.ini server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
+[ -f /ark/config/Game.ini ] && cp /ark/config/Game.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini
+[ -f /ark/config/GameUserSettings.ini ] && cp /ark/config/GameUserSettings.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
 
 
 # Launching ark server
