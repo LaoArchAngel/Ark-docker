@@ -58,6 +58,7 @@ VOLUME /ark/config
 VOLUME /ark/server
 VOLUME /ark/server/install/ShooterGame/Saved
 VOLUME /ark/backup
+VOLUME /ark/log
 
 # Change the working directory to /ark
 WORKDIR /ark
