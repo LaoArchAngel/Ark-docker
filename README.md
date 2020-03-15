@@ -116,7 +116,7 @@ To add mods, you only need to change the variable ark_GameModIds in *arkmanager.
 
 ## Volumes
 + __/ark__ : Working directory :
-    + /ark/server : Server files and data.
+    + /ark/server/install : Server files and data.
     + /ark/log : logs
     + /ark/backup : backups
     + /ark/arkmanager.cfg : config file for Ark Server Tools
@@ -126,7 +126,7 @@ To add mods, you only need to change the variable ark_GameModIds in *arkmanager.
     + /ark/template : Default config files
     + /ark/template/arkmanager.cfg : default config file for Ark Server Tools
     + /ark/template/crontab : default config file for crontab
-    + /ark/staging : default directory if you use the --downloadonly option when updating.
+    + /ark/server/staging : default directory if you use the --downloadonly option when updating.
 
 ## Expose
 + Port : __STEAMPORT__ : Steam port (default: 7778)

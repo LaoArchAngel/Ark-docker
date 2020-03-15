@@ -33,18 +33,18 @@ cp /home/steam/crontab /ark/template/crontab
 [ ! -f /ark/config/arkmanager.cfg ] && cp /home/steam/arkmanager.cfg /ark/config/arkmanager.cfg
 [ ! -d /ark/log ] && mkdir /ark/log
 [ ! -d /ark/backup ] && mkdir /ark/backup
-[ ! -d /ark/staging ] && mkdir /ark/staging
+[ ! -d /ark/server/staging ] && mkdir -p /ark/server/staging
 
 [ ! -f /ark/config/Game.ini ] && [ -f server/ShooterGame/Saved/Config/LinuxServer/Game.ini ] && cp server/ShooterGame/Saved/Config/LinuxServer/Game.ini /ark/config/Game.ini
 [ ! -f /ark/config/GameUserSettings.ini ] && [ -f server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini /ark/config/GameUserSettings.ini
 [ ! -f /ark/config/crontab ] && cp /ark/template/crontab /ark/config/crontab
 
-if [ ! -d /ark/server  ] || [ ! -f /ark/server/PackageInfo.bin ];then
+if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ];then
 	echo "No game files found. Installing..."
-	mkdir -p /ark/server/ShooterGame/Saved/SavedArks
-	mkdir -p /ark/server/ShooterGame/Content/Mods
-	mkdir -p /ark/server/ShooterGame/Binaries/Linux/
-	touch /ark/server/ShooterGame/Binaries/Linux/ShooterGameServer
+	mkdir -p /ark/server/install/ShooterGame/Saved/SavedArks
+	mkdir -p /ark/server/install/ShooterGame/Content/Mods
+	mkdir -p /ark/server/install/ShooterGame/Binaries/Linux/
+	touch /ark/server/install/ShooterGame/Binaries/Linux/ShooterGameServer
 	arkmanager install
 	# Create mod dir
 else

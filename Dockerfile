@@ -56,9 +56,8 @@ EXPOSE ${STEAMPORT}/udp ${SERVERPORT}/udp
 
 VOLUME /ark/config
 VOLUME /ark/server
-VOLUME /ark/server/ShooterGame/Saved
+VOLUME /ark/server/install/ShooterGame/Saved
 VOLUME /ark/backup
-VOLUME /ark/staging
 
 # Change the working directory to /ark
 WORKDIR /ark
