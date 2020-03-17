@@ -40,7 +40,8 @@ cp /home/steam/crontab /ark/template/crontab
 [ ! -f /ark/config/crontab ] && cp /ark/template/crontab /ark/config/crontab
 
 # Replace environment variables, since they do not work consistently with arkmanager.
-envsubst < /ark/config/arkmanager.cfg
+(envsubst < /ark/config/arkmanager.cfg) > /ark/config/arkmanager.cfg.temp
+mv /ark/config/arkmanager.cfg.temp /ark/config/arkmanager.cfg
 
 if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ];then
 	echo "No game files found. Installing..."
