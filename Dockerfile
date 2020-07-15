@@ -1,15 +1,10 @@
 FROM centos:latest
 
 # Var for first config
-ENV SESSIONNAME="Ark Docker" \
-    SERVERMAP="TheIsland" \
-    SERVERPASSWORD="" \
+ENV SERVERPASSWORD="" \
     ADMINPASSWORD="adminpassword" \
     MAX_PLAYERS=70 \
-    UPDATEONSTART=1 \
     BACKUPONSTART=1 \
-    SERVERPORT=27015 \
-    STEAMPORT=7777 \
     BACKUPONSTOP=1 \
     WARNONSTOP=1 \
     ARK_UID=1000 \
@@ -51,15 +46,11 @@ COPY arkmanager-system.cfg /etc/arkmanager/arkmanager.cfg
 # Define default config file in /etc/arkmanager
 COPY instance.cfg /etc/arkmanager/instances/main.cfg
 
-## PORTS ##
-EXPOSE ${STEAMPORT} 32330 ${SERVERPORT}
-EXPOSE ${STEAMPORT}/udp ${SERVERPORT}/udp
-
 VOLUME /ark/config
-VOLUME /ark/server
 VOLUME /ark/server/install/ShooterGame/Saved
 VOLUME /ark/backup
 VOLUME /ark/log
+
 
 # Change the working directory to /ark
 WORKDIR /ark
@@ -71,6 +62,10 @@ COPY user.sh /home/steam/user.sh
 
 RUN chmod 777 /home/steam/run.sh \
  && chmod 777 /home/steam/user.sh
+
+# Install Ark
+USER steam
+RUN arkmanager install
 
 
 # Update game launch the game.
