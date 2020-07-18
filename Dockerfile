@@ -63,10 +63,6 @@ COPY user.sh /home/steam/user.sh
 RUN chmod 777 /home/steam/run.sh \
  && chmod 777 /home/steam/user.sh
 
-# Install Ark
-USER steam
-RUN arkmanager install
-
 
 # Update game launch the game.
 ENTRYPOINT ["/home/steam/user.sh"]
