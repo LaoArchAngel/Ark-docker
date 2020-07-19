@@ -37,7 +37,7 @@ RUN mkdir /home/steam/steamcmd \
 COPY arkupdate /usr/local/bin
 COPY arkmodupdate /usr/local/bin
 
-RUN chmod +x /usr/local/bin/arkupdate
+RUN chmod +x /usr/local/bin/arkupdate \
  && chmod +x /usr/local/bin/arkmodupdate
 
 
@@ -47,7 +47,7 @@ COPY arkmanager-user.cfg /home/steam/arkmanager.cfg
 COPY instance.cfg /home/steam/instance.cfg
 
 RUN mkdir /ark \
- && chown steam /ark && chmod 755 /ark
+ && chown steam /ark && chmod 755 /ark \
  && chown -R steam:steam /home/steam
 
 # Define default config file in /etc/arkmanager
