@@ -6,14 +6,23 @@ SHELL=/bin/bash
 # |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ... 
 # |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat 
 # |  |  |  |  | 
-# *  *  *  *  *  user command to be executed 
-# Example : update every hour
-# 0 * * * * arkmanager update >> /ark/log/crontab.log 2>&1
-# Example : backup every 15min
-# */15 * * * * arkmanager backup >> /ark/log/crontab.log 2>&1
-# Example : backup every day at midnight
-# 0 0 * * * arkmanager backup >> /ark/log/crontab.log 2>&1
-# Example : Clean up backups older than 7 days and remove empty folders at 2:10am
-# 10 2 * * * find /ark/backup -type f -mtime +7 -delete; find /ark/backup -type d -empty -delete
-# WARNING : the container timezone is maybe not your current timezone
-#           You can sync them with option -v /etc/localtime:/etc/localtime:ro or -e "TZ=UTC"
+
+# Check for mod updates every 15 minutes
+#15,30,45 * * * * /usr/local/bin/arkmodupdate >> /ark/log/crontab.log 2>&1
+
+# Check for server updates every hour
+#5 * * * * /usr/local/bin/arkupdate >> /ark/log/crontab.log 2>&1
+
+# Backup @ 20 & 40
+#0,20,40 * * * * /usr/local/bin/arkmanager saveworld @all && /usr/local/bin/arkmanager backup @all >> /ark/log/crontab.log 2>&1
+
+# Clean backups
+#10 0 * * * find /ark/backup -type f -mtime +7 -delete
+#15 0 * * * find /ark/backup -type d -empty -delete
+
+#0 0 * * * cp ark/log/arkserver.log /ark/log/arkserver.`date +%Y%m%d`.log && cat /dev/null > /ark/log/arkserver.log
+#0 0 * * * cp ark/log/arkmanager.log /ark/log/arkmanager.`date +%Y%m%d`.log && cat /dev/null > /ark/log/arkmanager.log
+#0 0 * * * cp ark/log/crontab.log /ark/log/crontab.`date +%Y%m%d`.log && cat /dev/null > /ark/log/crontab.log
+
+# Remove core files from binaries
+#0 * * * * find /ark/server/install/ShooterGame/Binaries -type f -name "core\.*" -delete
