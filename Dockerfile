@@ -33,12 +33,21 @@ RUN mkdir /home/steam/steamcmd \
   && curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
 
 
+# Copy update scripts
+COPY arkupdate /usr/bin
+COPY arkmodupdate /usr/bin
+
+RUN chmod +x /usr/bin/arkupdate
+ && chmod +x /usr/bin/arkmodupdate
+
+
 # Copy & rights to folders
 COPY crontab /home/steam/crontab
 COPY arkmanager-user.cfg /home/steam/arkmanager.cfg
 
 RUN mkdir /ark \
  && chown steam /ark && chmod 755 /ark
+ && chown -R steam:steam /home/steam
 
 # Define default config file in /etc/arkmanager
 COPY arkmanager-system.cfg /etc/arkmanager/arkmanager.cfg
