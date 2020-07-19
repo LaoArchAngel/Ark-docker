@@ -30,10 +30,13 @@ cd /ark
 cp /home/steam/arkmanager.cfg /ark/template/arkmanager.cfg
 cp /home/steam/crontab /ark/template/crontab
 # Creating directory tree && symbolic link
+[ ! -d /ark/config ] && mkdir /ark/config
 [ ! -f /ark/config/arkmanager.cfg ] && cp /home/steam/arkmanager.cfg /ark/config/arkmanager.cfg
 [ ! -d /ark/log ] && mkdir /ark/log
 [ ! -d /ark/backup ] && mkdir /ark/backup
 [ ! -d /ark/server/staging ] && mkdir -p /ark/server/staging
+[ ! -d /ark/config/instances ] && mkdir /ark/config/instances
+[ ! -f /ark/config/instances/main.cfg ] && cp /home/steam/instance.cfg /ark/config/instances/main.cfg
 
 [ ! -f /ark/config/Game.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini ] && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini /ark/config/Game.ini
 [ ! -f /ark/config/GameUserSettings.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini /ark/config/GameUserSettings.ini

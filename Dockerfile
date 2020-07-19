@@ -44,6 +44,7 @@ RUN chmod +x /usr/bin/arkupdate
 # Copy & rights to folders
 COPY crontab /home/steam/crontab
 COPY arkmanager-user.cfg /home/steam/arkmanager.cfg
+COPY instance.cfg /home/steam/instance.cfg
 
 RUN mkdir /ark \
  && chown steam /ark && chmod 755 /ark
