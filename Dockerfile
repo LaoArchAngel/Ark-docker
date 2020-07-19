@@ -13,8 +13,8 @@ ENV SERVERPASSWORD="" \
 
 ## Install dependencies
 RUN dnf clean packages
-RUN yum -y install glibc.i686 libstdc++.i686 git lsof bzip2 cronie perl-Compress-Zlib curl bash findutils perl rsync sed tar sudo dnsmasq gettext \
- && yum clean all
+RUN dnf -y install glibc.i686 libstdc++.i686 git lsof bzip2 cronie perl-Compress-Zlib curl bash findutils perl rsync sed tar sudo dnsmasq gettext \
+ && dnf clean all
 
 
 ## Prepare steam user
