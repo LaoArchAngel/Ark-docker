@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# local updateNeede=$?
-
 mapfile -t instances < <( arkmanager list-instances --brief )
 first="@${instances[0]}"
 
@@ -11,7 +9,7 @@ updateNeeded=$?
 
 [[ "$updateNeeded" -eq 0 ]] && exit 0
 
-arkmanager update "$first" --downloadonly
-arkmanager stop --warn --warnreason "Server update" --saveworld
-arkmanager update "$first" --no-download
+arkmanager update --downloadonly "$first"
+arkmanager stop --warn --warnreason "Server update" --saveworld @all
+arkmanager update --no-download "$first"
 arkmanager start @all
