@@ -69,9 +69,9 @@ echo "Copying the config files..."
 
 # Launching ark server
 if [ $UPDATEONSTART -eq 0 ]; then
-	arkmanager start --noautoupdate
+	arkmanager start --noautoupdate @all
 else
-	arkmanager start
+	arkmanager start @all
 fi
 
 
