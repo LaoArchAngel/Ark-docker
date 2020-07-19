@@ -34,11 +34,11 @@ RUN mkdir /home/steam/steamcmd \
 
 
 # Copy update scripts
-COPY arkupdate /usr/bin
-COPY arkmodupdate /usr/bin
+COPY arkupdate /usr/local/bin
+COPY arkmodupdate /usr/local/bin
 
-RUN chmod +x /usr/bin/arkupdate
- && chmod +x /usr/bin/arkmodupdate
+RUN chmod +x /usr/local/bin/arkupdate
+ && chmod +x /usr/local/bin/arkmodupdate
 
 
 # Copy & rights to folders
