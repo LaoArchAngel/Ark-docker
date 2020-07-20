@@ -66,6 +66,10 @@ echo "Copying the config files..."
 [[ -f /ark/config/Game.ini ]] && cp /ark/config/Game.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini
 [[ -f /ark/config/GameUserSettings.ini ]] && cp /ark/config/GameUserSettings.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
 
+# Set instances symbolic link
+mkdir -p /home/steam/.config/arkmanager
+ln -s /ark/config/instances /home/steam/.config/arkmanager/instances
+
 mapfile -t instances < <( arkmanager list-instances --brief )
 
 # Launching ark server
