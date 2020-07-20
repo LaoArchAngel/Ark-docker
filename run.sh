@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "###########################################################################"
-echo "# Ark Server - " `date`
+echo "# Ark Server - $(date)"
 echo "# UID $ARK_UID - GID $ARK_GID"
 echo "###########################################################################"
 [ -p /tmp/FIFO ] && rm /tmp/FIFO
@@ -9,11 +9,11 @@ mkfifo /tmp/FIFO
 export TERM=linux
 
 function stop {
-	if [ ${BACKUPONSTOP} -eq 1 ] && [ "$(ls -A /ark/server/install/ShooterGame/Saved/SavedArks)" ]; then
+	if [ "${BACKUPONSTOP}" -eq 1 ] && [ "$(ls -A /ark/server/install/ShooterGame/Saved/SavedArks)" ]; then
 		echo "[Backup on stop]"
 		arkmanager backup
 	fi
-	if [ ${WARNONSTOP} -eq 1 ];then 
+	if [ "${WARNONSTOP}" -eq 1 ];then
 	    arkmanager stop --warn
 	else
 	    arkmanager stop
@@ -22,7 +22,7 @@ function stop {
 }
 
 # Change working directory to /ark to allow relative path
-cd /ark
+cd /ark || exit
 
 # Add a template directory to store the last version of config file
 [ ! -d /ark/template ] && mkdir /ark/template
@@ -86,7 +86,7 @@ echo "Server Finished Loading!  Waiting for stop..."
 trap stop INT
 trap stop TERM
 
-read < /tmp/FIFO &
+read -r < /tmp/FIFO &
 wait
 
 arkmanager stop @all --saveworld
