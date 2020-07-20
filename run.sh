@@ -68,18 +68,14 @@ echo "Copying the config files..."
 
 # Set instances symbolic link
 mkdir -p /home/steam/.config/arkmanager
-ln -s /ark/config/instances /home/steam/.config/arkmanager/instances
-
-mapfile -t instances < <( arkmanager list-instances --brief )
+ln -sf /ark/config/instances /home/steam/.config/arkmanager/instances
 
 # Launching ark server
-for inst in "${instances[@]}"; do
-  if [[ "$UPDATEONSTART" -eq 0 ]]; then
-    arkmanager start --noautoupdate "@$inst"
-  else
-    arkmanager start "@$inst"
-  fi
-done
+if [[ "$UPDATEONSTART" -eq 0 ]]; then
+  arkmanager start --noautoupdate @all
+else
+  arkmanager start @all
+fi
 
 
 # Installing crontab for user steam
