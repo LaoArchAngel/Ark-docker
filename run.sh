@@ -57,16 +57,16 @@ mv /ark/config/arkmanager.cfg.temp /ark/config/arkmanager.cfg
 
 if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ];then
 	echo "No game files found. Installing..."
-	mkdir -p /ark/server/install/ShooterGame/Saved/SavedArks
+	mkdir -p /ark/server/install/ShooterGame/Saved
 	mkdir -p /ark/server/install/ShooterGame/Content/Mods
 	mkdir -p /ark/server/install/ShooterGame/Binaries/Linux/
 	touch /ark/server/install/ShooterGame/Binaries/Linux/ShooterGameServer
 	arkmanager install
 	# Create mod dir
 else
-	if [[ "${BACKUPONSTART}" -eq 1 ]] && [ "$(ls -A /ark/server/install/ShooterGame/Saved/SavedArks/)" ]; then
+	if [[ "${BACKUPONSTART}" -eq 1 ]] && [ "$(ls -A /ark/server/install/ShooterGame/Saved/)" ]; then
 		echo "[Backup]"
-		arkmanager backup
+		arkmanager backup @all
 	fi
 fi
 
