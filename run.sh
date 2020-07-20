@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
+
 echo "###########################################################################"
 echo "# Ark Server - $(date)"
 echo "# UID $ARK_UID - GID $ARK_GID"
 echo "###########################################################################"
+
 [ -p /tmp/FIFO ] && rm /tmp/FIFO
 mkfifo /tmp/FIFO
 
@@ -22,25 +24,31 @@ function stop {
 }
 
 # Change working directory to /ark to allow relative path
-cd /ark || exit
+cd /ark || exit 1
 
 # Add a template directory to store the last version of config file
-[ ! -d /ark/template ] && mkdir /ark/template
+mkdir -p /ark/config/template
+
 # We overwrite the template file each time
-cp /home/steam/arkmanager.cfg /ark/template/arkmanager.cfg
-cp /home/steam/crontab /ark/template/crontab
+cp -f /home/steam/arkmanager.cfg /ark/config/template/arkmanager.cfg
+cp -f /home/steam/crontab /ark/config/template/crontab
+
 # Creating directory tree && symbolic link
-[ ! -d /ark/config ] && mkdir /ark/config
-[ ! -f /ark/config/arkmanager.cfg ] && cp /home/steam/arkmanager.cfg /ark/config/arkmanager.cfg
-[ ! -d /ark/log ] && mkdir /ark/log
-[ ! -d /ark/backup ] && mkdir /ark/backup
-[ ! -d /ark/server/staging ] && mkdir -p /ark/server/staging
-[ ! -d /ark/config/instances ] && mkdir /ark/config/instances
-[ ! -f /ark/config/instances/main.cfg ] && cp /home/steam/instance.cfg /ark/config/instances/main.cfg
+mkdir -p /ark/config
+mkdir -p /ark/log
+mkdir -p /ark/backup
+mkdir -p /ark/server/staging
+mkdir -p /ark/config/instances
+mkdir -p /home/steam/.config/arkmanager
+
+ln -sf /ark/config/instances /home/steam/.config/arkmanager/instances
+
+cp -n /home/steam/arkmanager.cfg /ark/config/arkmanager.cfg
+cp -n /home/steam/instance.cfg /ark/config/instances/main.cfg
+cp -n /ark/template/crontab /ark/config/crontab
 
 [ ! -f /ark/config/Game.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini ] && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini /ark/config/Game.ini
 [ ! -f /ark/config/GameUserSettings.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini /ark/config/GameUserSettings.ini
-[ ! -f /ark/config/crontab ] && cp /ark/template/crontab /ark/config/crontab
 
 # Replace environment variables, since they do not work consistently with arkmanager.
 (envsubst < /ark/config/arkmanager.cfg) > /ark/config/arkmanager.cfg.temp
@@ -65,10 +73,6 @@ fi
 echo "Copying the config files..."
 [[ -f /ark/config/Game.ini ]] && cp /ark/config/Game.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini
 [[ -f /ark/config/GameUserSettings.ini ]] && cp /ark/config/GameUserSettings.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
-
-# Set instances symbolic link
-mkdir -p /home/steam/.config/arkmanager
-ln -sf /ark/config/instances /home/steam/.config/arkmanager/instances
 
 # Launching ark server
 if [[ "$UPDATEONSTART" -eq 0 ]]; then
