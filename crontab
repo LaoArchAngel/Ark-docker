@@ -20,9 +20,9 @@ SHELL=/bin/bash
 #10 0 * * * find /ark/backup -type f -mtime +7 -delete
 #15 0 * * * find /ark/backup -type d -empty -delete
 
-#0 0 * * * cp ark/log/arkserver.log /ark/log/arkserver.`date +%Y%m%d`.log && cat /dev/null > /ark/log/arkserver.log
-#0 0 * * * cp ark/log/arkmanager.log /ark/log/arkmanager.`date +%Y%m%d`.log && cat /dev/null > /ark/log/arkmanager.log
-#0 0 * * * cp ark/log/crontab.log /ark/log/crontab.`date +%Y%m%d`.log && cat /dev/null > /ark/log/crontab.log
+#0 0 * * * cp /ark/log/arkserver.log /ark/log/arkserver.`date +%Y%m%d`.log && cat /dev/null > /ark/log/arkserver.log
+#0 0 * * * cp /ark/log/arkmanager.log /ark/log/arkmanager.`date +%Y%m%d`.log && cat /dev/null > /ark/log/arkmanager.log
+#0 0 * * * cp /ark/log/crontab.log /ark/log/crontab.`date +%Y%m%d`.log && cat /dev/null > /ark/log/crontab.log
 
 # Remove core files from binaries
 #0 * * * * find /ark/server/install/ShooterGame/Binaries -type f -name "core\.*" -delete
