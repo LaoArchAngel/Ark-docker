@@ -66,13 +66,16 @@ echo "Copying the config files..."
 [[ -f /ark/config/Game.ini ]] && cp /ark/config/Game.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini
 [[ -f /ark/config/GameUserSettings.ini ]] && cp /ark/config/GameUserSettings.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
 
+mapfile -t instances < <( arkmanager list-instances --brief )
 
 # Launching ark server
-if [[ "$UPDATEONSTART" -eq 0 ]]; then
-	arkmanager start --noautoupdate @all
-else
-	arkmanager start @all
-fi
+for inst in "${instances[@]}"; do
+  if [[ "$UPDATEONSTART" -eq 0 ]]; then
+    arkmanager start --noautoupdate "@$inst"
+  else
+    arkmanager start "@$inst"
+  fi
+done
 
 
 # Installing crontab for user steam
