@@ -16,6 +16,7 @@ RUN dnf clean packages
 RUN dnf -y install glibc.i686 libstdc++.i686 git lsof bzip2 cronie perl-Compress-Zlib curl bash findutils perl rsync sed tar sudo dnsmasq gettext \
  && dnf clean all
 
+RUN systemctl enable dnsmasq
 
 ## Prepare steam user
 RUN adduser -u $ARK_UID -s /bin/bash -U steam
