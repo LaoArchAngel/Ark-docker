@@ -92,7 +92,6 @@ done
 
 # Installing crontab for user steam
 echo "Loading crontab..."
-#cat /ark/crontab | crontab -
 crontab /ark/config/crontab
 
 
