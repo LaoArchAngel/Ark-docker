@@ -32,6 +32,7 @@ mkdir -p /ark/config/template
 # We overwrite the template file each time
 cp -f /home/steam/arkmanager.cfg /ark/config/template/arkmanager.cfg
 cp -f /home/steam/crontab /ark/config/template/crontab
+cp -f /home/steam/instance.cfg /ark/config/template/instance.cfg
 
 # Creating directory tree && symbolic link
 mkdir -p /ark/config
