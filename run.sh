@@ -9,7 +9,7 @@ mkfifo /tmp/FIFO
 export TERM=linux
 
 function stop {
-	if [ "${BACKUPONSTOP}" -eq 1 ] && [ "$(ls -A /ark/server/install/ShooterGame/Saved/SavedArks)" ]; then
+	if [ "${BACKUPONSTOP}" -eq 1 ] && [ "$(ls -A /ark/server/install/ShooterGame/Saved)" ]; then
 		echo "[Backup on stop]"
 		arkmanager backup
 	fi
