@@ -5,7 +5,7 @@ needUpdate=()
 
 for inst in "${instances[@]}"; do
   updateNeeded=$(/usr/local/bin/arkmanager update --update-mods --downloadonly "@$inst" | grep "already up to date")
-  [[ -n "$updateNeeded" ]] && needUpdate+=( "$inst" )
+  [[ -z "$updateNeeded" ]] && needUpdate+=( "$inst" )
 done
 
 for upd in "${needUpdate[@]}" ; do
