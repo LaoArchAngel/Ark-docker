@@ -42,11 +42,10 @@ mkdir -p /ark/server/staging
 mkdir -p /ark/config/instances
 mkdir -p /home/steam/.config/arkmanager
 
-ln -sf /ark/config/instances /home/steam/.config/arkmanager/instances
-
 cp -n /home/steam/arkmanager.cfg /ark/config/arkmanager.cfg
 cp -n /home/steam/instance.cfg /ark/config/instances/main.cfg
-cp -n /ark/template/crontab /ark/config/crontab
+cp -n /home/steam/crontab /ark/config/crontab
+cp -afR /ark/config/instances /home/steam/.config/arkmanager/instances
 
 [ ! -f /ark/config/Game.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini ] && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini /ark/config/Game.ini
 [ ! -f /ark/config/GameUserSettings.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini /ark/config/GameUserSettings.ini
@@ -84,14 +83,16 @@ mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
 echo "Found ${#instances[@]} instances"
 
 # Launching ark server
-for inst in "${instances[@]}"; do
-  echo "Starting $inst"
+#for inst in "${instances[@]}"; do
+#  echo "Starting $inst"
   if [[ "$UPDATEONSTART" -eq 0 ]]; then
-    arkmanager start --noautoupdate "@$inst"
+#    arkmanager start --noautoupdate "@$inst"
+    arkmanager start @all
   else
-    arkmanager start "@$inst"
+#    arkmanager start "@$inst"
+    arkmanager start @all
   fi
-done
+#done
 
 # Installing crontab for user steam
 echo "Loading crontab..."
