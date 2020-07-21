@@ -75,7 +75,10 @@ echo "Copying the config files..."
 [[ -f /ark/config/Game.ini ]] && cp /ark/config/Game.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini
 [[ -f /ark/config/GameUserSettings.ini ]] && cp /ark/config/GameUserSettings.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
 
+arkmanager upgrade-tools
+
 # Get instances info
+ls -l /home/steam/.config/arkmanager/instances
 arkmanager list-instances
 mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
 echo "Found ${#instances[@]} instances"
