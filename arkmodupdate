@@ -4,13 +4,12 @@ mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
 needUpdate=()
 
 for inst in "${instances[@]}"; do
-  /usr/local/bin/arkmanager checkmodupdate --revstatus "@$inst"
-  updateNeeded=$?
-  [[ "$updateNeeded" -ne 0 ]] && needUpdate+=( "$inst" )
+  updateNeeded=$(/usr/local/bin/arkmanager update --update-mods --downloadonly "@$inst" | grep "already up to date")
+  [[ -n "$updateNeeded" ]] && needUpdate+=( "$inst" )
 done
 
 for upd in "${needUpdate[@]}" ; do
   /usr/local/bin/arkmanager stop --warn "Mod update" "@$upd"
-  /usr/local/bin/arkmanager update --update-mods --backup "@$upd"
+  /usr/local/bin/arkmanager update --update-mods  --no-download --backup "@$upd"
   /usr/local/bin/arkmanager start "@$upd"
 done
