@@ -78,7 +78,7 @@ echo "Copying the config files..."
 arkmanager upgrade-tools
 
 # Get instances info
-ls -l /home/steam/.config/arkmanager/instances
+ls -l /home/steam/.config/arkmanager/instances/
 arkmanager list-instances
 mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
 echo "Found ${#instances[@]} instances"
