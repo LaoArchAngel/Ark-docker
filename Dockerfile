@@ -50,13 +50,11 @@ COPY instance.cfg /home/steam/instance.cfg
 RUN mkdir /ark \
  && mkdir -p /home/steam/Steam/steamapps/workshop \
  && chown steam /ark && chmod 755 /ark \
- && chown -R steam:steam /home/steam
+ && chown -R steam:steam /home/steam \
+ && rm -Rf /etc/arkmanager/instances
 
 # Define default config file in /etc/arkmanager
 COPY arkmanager-system.cfg /etc/arkmanager/arkmanager.cfg
-
-# Define default config file in /etc/arkmanager
-COPY instance.cfg /etc/arkmanager/instances/main.cfg
 
 VOLUME /ark/config
 VOLUME /ark/server/install/ShooterGame/Saved
