@@ -50,8 +50,7 @@ COPY instance.cfg /home/steam/instance.cfg
 RUN mkdir /ark \
  && mkdir -p /home/steam/Steam/steamapps/workshop \
  && chown steam /ark && chmod 755 /ark \
- && chown -R steam:steam /home/steam \
- && rm -Rf /etc/arkmanager/instances
+ && chown -R steam:steam /home/steam
 
 # Define default config file in /etc/arkmanager
 COPY arkmanager-system.cfg /etc/arkmanager/arkmanager.cfg
