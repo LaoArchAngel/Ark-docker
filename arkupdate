@@ -1,15 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
-first="@${instances[0]}"
-
-/usr/local/bin/arkmanager checkupdate "$first"
+arkmanager checkupdate
 
 updateNeeded=$?
 
 [[ "$updateNeeded" -eq 0 ]] && exit 0
 
-/usr/local/bin/arkmanager update --downloadonly "$first"
-/usr/local/bin/arkmanager stop --warn --warnreason "Server update" --saveworld @all
-/usr/local/bin/arkmanager update --no-download "$first"
-/usr/local/bin/arkmanager start @all
+arkmanager update --downloadonly
+arkmanager stop --warn --warnreason "Server update" --saveworld --backup @all
+arkmanager update --no-download
+arkmanager start @all
