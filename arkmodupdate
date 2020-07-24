@@ -1,16 +1,16 @@
 #!/bin/bash
 
-mapfile -t instances < <( arkmanager list-instances --brief )
+mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
 needUpdate=()
 
 for inst in "${instances[@]}"; do
-  arkmanager checkmodupdate --revstatus "@$inst"
+  /usr/local/bin/arkmanager checkmodupdate --revstatus "@$inst"
   updateNeeded=$?
   [[ "$updateNeeded" -ne 0 ]] && needUpdate+=( "@$inst" )
 done
 
 for upd in "${needUpdate[@]}" ; do
-  arkmanager stop --warn "Mod update" "$upd"
-  arkmanager update --update-mods --backup "$upd"
-  arkmanager start "$upd"
+  /usr/local/bin/arkmanager stop --warn "Mod update" "$upd"
+  /usr/local/bin/arkmanager update --update-mods --backup "$upd"
+  /usr/local/bin/arkmanager start "$upd"
 done
