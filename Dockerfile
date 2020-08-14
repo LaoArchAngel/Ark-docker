@@ -56,7 +56,7 @@ RUN mkdir /ark \
 COPY arkmanager-system.cfg /etc/arkmanager/arkmanager.cfg
 
 VOLUME /ark/config
-VOLUME /ark/server/install/ShooterGame/Saved
+VOLUME /ark/saves
 VOLUME /ark/backup
 VOLUME /ark/log
 
