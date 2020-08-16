@@ -23,6 +23,8 @@ function stop {
 	exit
 }
 
+arkmanager upgrade-tools
+
 # Change working directory to /ark to allow relative path
 cd /ark || exit 1
 
@@ -38,6 +40,7 @@ cp -f /home/steam/instance.cfg /ark/config/template/instance.cfg
 mkdir -p /ark/config
 mkdir -p /ark/log
 mkdir -p /ark/backup
+mkdir -p /ark/saves/main
 mkdir -p /ark/server/staging
 mkdir -p /ark/config/instances
 mkdir -p /home/steam/.config/arkmanager
@@ -45,8 +48,12 @@ mkdir -p /home/steam/.config/arkmanager
 cp -n /home/steam/arkmanager.cfg /ark/config/arkmanager.cfg
 cp -n /home/steam/instance.cfg /ark/config/instances/main.cfg
 cp -n /home/steam/crontab /ark/config/crontab
-cp -afR /ark/config/instances /home/steam/.config/arkmanager/instances
 
+# Link instances folders
+[[ -d /home/steam/.config/arkmanager/instances ]] && rm -Rf /home/steam/.config/arkmanager/instances
+ln -sf /ark/config/instances /home/steam/.config/arkmanager/instances
+
+# Copy over default configs if not found in container config folder
 [ ! -f /ark/config/Game.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini ] && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini /ark/config/Game.ini
 [ ! -f /ark/config/GameUserSettings.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini /ark/config/GameUserSettings.ini
 
@@ -56,7 +63,6 @@ mv /ark/config/arkmanager.cfg.temp /ark/config/arkmanager.cfg
 
 if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ];then
 	echo "No game files found. Installing..."
-	mkdir -p /ark/server/install/ShooterGame/Saved
 	mkdir -p /ark/server/install/ShooterGame/Content/Mods
 	mkdir -p /ark/server/install/ShooterGame/Binaries/Linux/
 	touch /ark/server/install/ShooterGame/Binaries/Linux/ShooterGameServer
@@ -69,12 +75,13 @@ else
 	fi
 fi
 
+# linking main save
+ln -s /ark/saves/main /ark/server/install/ShooterGame/Saved
+
 #copying the actual configs
 echo "Copying the config files..."
 [[ -f /ark/config/Game.ini ]] && cp /ark/config/Game.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini
 [[ -f /ark/config/GameUserSettings.ini ]] && cp /ark/config/GameUserSettings.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
-
-arkmanager upgrade-tools
 
 # Get instances info
 ls -l /home/steam/.config/arkmanager/instances/
@@ -83,16 +90,11 @@ mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
 echo "Found ${#instances[@]} instances"
 
 # Launching ark server
-#for inst in "${instances[@]}"; do
-#  echo "Starting $inst"
-  if [[ "$UPDATEONSTART" -eq 0 ]]; then
-#    arkmanager start --noautoupdate "@$inst"
-    arkmanager start @all
-  else
-#    arkmanager start "@$inst"
-    arkmanager start @all
-  fi
-#done
+if [[ "$UPDATEONSTART" -eq 0 ]]; then
+	arkmanager start @all
+else
+	arkmanager start @all
+fi
 
 # Installing crontab for user steam
 echo "Loading crontab..."
