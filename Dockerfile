@@ -67,15 +67,11 @@ WORKDIR /ark
 
 
 ## Startup Scripts ##
-COPY --chown=steam:steam run.sh /home/steam/run.sh
-COPY --chown=steam:steam user.sh /home/steam/user.sh
-COPY --chown=steam:steam ark-create-all-shallows.sh /home/steam/
-COPY --chown=steam:steam ark-create-shallow.sh /home/steam/
-COPY --chown=steam:steam ark-gen-shallow.sh /home/steam/
-COPY --chown=steam:steam ark-set-shallow-save.sh /home/steam/
-COPY --chown=steam:steam check-shallow-ark.sh /home/steam/
+COPY run.sh /home/steam/run.sh
+COPY user.sh /home/steam/user.sh
+COPY --chown=steam:steam ark-create-all-shallows.sh ark-create-shallow.sh ark-gen-shallow.sh ark-set-shallow-save.sh check-shallow-ark.sh /home/steam/
 
-RUN chmod +x ark-create-all-shallows.sh ark-create-shallow.sh ark-gen-shallow.sh ark-set-shallow-save.sh check-shallow-ark.sh
+RUN chmod +x /home/steam/ark-create-all-shallows.sh /home/steam/ark-create-shallow.sh /home/steam/ark-gen-shallow.sh /home/steam/ark-set-shallow-save.sh /home/steam/check-shallow-ark.sh
 RUN ln -s /home/steam/ark-create-all-shallows.sh /usr/local/bin/ark-create-all-shallows \
   ln -s /home/steam/ark-create-shallow.sh /usr/local/bin/ark-create-shallow \
   ln -s /home/steam/ark-gen-shallow.sh /usr/local/bin/ark-gen-shallow \
