@@ -69,6 +69,14 @@ WORKDIR /ark
 ## Startup Scripts ##
 COPY run.sh /home/steam/run.sh
 COPY user.sh /home/steam/user.sh
+COPY --chown=steam:steam ark-create-all-shallows.sh ark-create-shallow.sh ark-gen-shallow.sh ark-set-shallow-save.sh check-shallow-ark.sh /home/steam/
+
+RUN chmod +x ark-create-all-shallows.sh ark-create-shallow.sh ark-gen-shallow.sh ark-set-shallow-save.sh check-shallow-ark.sh
+RUN ln -s /home/steam/ark-create-all-shallows.sh /usr/local/bin/ark-create-all-shallows \
+  ln -s /home/steam/ark-create-shallow.sh /usr/local/bin/ark-create-shallow \
+  ln -s /home/steam/ark-gen-shallow.sh /usr/local/bin/ark-gen-shallow \
+  ln -s /home/steam/ark-set-shallow-save.sh  /usr/local/bin/ark-set-shallow-save \
+  ln -s /home/steam/check-shallow-ark.sh  /usr/local/bin/check-shallow-ark
 
 RUN chmod 777 /home/steam/run.sh \
  && chmod 777 /home/steam/user.sh
