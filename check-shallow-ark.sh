@@ -12,7 +12,11 @@ if [[ -n "$arkroot" ]]; then
     [[ "$arkroot" != "/ark/instances"* ]] && exit 0
 fi
 
-[[ -z "$arkroot" ]] && arkroot="/ark/instances/$(basename -s .cfg "$cfg")"
+if [[ -z "$arkroot" ]]; then
+    arkroot="/ark/instances/$(basename -s .cfg "$cfg")"
+    echo "" >> "$cfg" #ensure empty line
+    echo "arkserverroot="$arkroot"" >> "$cfg" # save new arkroot
+fi
 
 echo "$arkroot"
 
