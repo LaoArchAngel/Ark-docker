@@ -49,10 +49,6 @@ cp -n /home/steam/arkmanager.cfg /ark/config/arkmanager.cfg
 cp -n /home/steam/instance.cfg /ark/config/instances/main.cfg
 cp -n /home/steam/crontab /ark/config/crontab
 
-# Link instances folders
-[[ -d /home/steam/.config/arkmanager/instances ]] && rm -Rf /home/steam/.config/arkmanager/instances
-ln -sf /ark/config/instances /home/steam/.config/arkmanager/instances
-
 # Copy over default configs if not found in container config folder
 [ ! -f /ark/config/Game.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini ] && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini /ark/config/Game.ini
 [ ! -f /ark/config/GameUserSettings.ini ] && [ -f /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini ]  && cp /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini /ark/config/GameUserSettings.ini
