@@ -74,7 +74,6 @@ COPY --chown=steam:steam ark-create-all-shallows.sh ark-create-shallow.sh ark-ge
 RUN chmod +x /home/steam/ark-create-all-shallows.sh /home/steam/ark-create-shallow.sh /home/steam/ark-gen-shallow.sh /home/steam/ark-set-shallow-save.sh /home/steam/check-shallow-ark.sh
 RUN ln -sT /home/steam/ark-create-all-shallows.sh /usr/local/bin/ark-create-all-shallows \
   && ln -sT /home/steam/ark-create-shallow.sh /usr/local/bin/ark-create-shallow \
-  && ln -sT /home/steam/ark-create-shallow.sh /usr/local/bin/ark-create-shallow \
   && ln -sT /home/steam/ark-gen-shallow.sh /usr/local/bin/ark-gen-shallow \
   && ln -sT /home/steam/ark-set-shallow-save.sh  /usr/local/bin/ark-set-shallow-save \
   && ln -sT /home/steam/check-shallow-ark.sh  /usr/local/bin/check-shallow-ark
