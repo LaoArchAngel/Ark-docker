@@ -9,6 +9,8 @@ saveName=$2
 fullSave="/ark/saves/"$2""
 targetSave="${instPath}/ShooterGame/Saved"
 
+echo "Linking save path "$fullSave" to shallow instance "$targetSave""
+
 [[ ! -d "$fullSave" ]] && mkdir "$fullSave"
 
 [[ -d "$targetSave" ]] && rm -Rf "$targetSave"
