@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 for cfg in /ark/config/instances/*.cfg; do
     [[ "$cfg" == "main.cfg" ]] && continue

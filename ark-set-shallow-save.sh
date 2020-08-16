@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 instPath=$1
 saveName=$2
