@@ -1,16 +1,23 @@
 #!/bin/bash
 
-for cfg in /ark/config/instances; do
-    instName="$(basename -s .cfg ${cfg})"
-    /usr/local/bin/arkmanager checkmodupdate "@$instName" --revstatus
-    updateNeeded=$?
+mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
+needUpdate=()
 
-    [[ "$updateNeeded" -eq 0 ]] && continue
+for inst in "${instances[@]}"; do
+  /usr/local/bin/arkmanager checkmodupdate "@$inst" --revstatus
+  updateNeeded=$?
 
+  if [[ "$updateNeeded" -ne 0 ]]; then
+    needUpdate+=( "$inst" )
+    /usr/local/bin/arkmanager stop "@$inst" --warn --warnreason="Mod update"
+  fi
+done
+
+for instName in "${needUpdate[@]}" ; do
     echo "Updating mods for "$instName""
-    upd="@${instName}"
-    /usr/local/bin/arkmanager stop "$upd" --warn --warnreason="Mod update"
 
+    cfg="/ark/config/instances/${instName}.cfg"
+    upd="@${instName}"
     shallowPath="$(/usr/local/bin/check-shallow-ark "$cfg")"
     
     # Not shallow
@@ -30,6 +37,8 @@ for cfg in /ark/config/instances; do
         # Finally, go back to hardlinks
         /usr/local/bin/ark-gen-shallow "$shallowPath"
         /usr/local/bin/ark-set-shallow-save "$shallowPath" "$instName"
-        /usr/local/bin/arkmanager start "$upd"
+        /usr/local/bin/arkmanager start "$upd" --noautoupdate
     fi
 done
+
+/usr/local/bin/arkmanager start @all --noautoupdate
