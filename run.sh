@@ -64,11 +64,6 @@ if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ]
 	touch /ark/server/install/ShooterGame/Binaries/Linux/ShooterGameServer
 	arkmanager install
 	# Create mod dir
-else
-	if [[ "${BACKUPONSTART}" -eq 1 ]] && [ "$(ls -A /ark/server/install/ShooterGame/Saved/)" ]; then
-		echo "[Backup]"
-		arkmanager backup @all
-	fi
 fi
 
 # Generate all necessary shallow instances
@@ -88,6 +83,12 @@ ls -l /home/steam/.config/arkmanager/instances/
 arkmanager list-instances
 mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
 echo "Found ${#instances[@]} instances"
+
+if [[ "${BACKUPONSTART}" -eq 1 ]] && [ "$(ls -A /ark/server/install/ShooterGame/Saved/)" ]; then
+	echo "[Backup]"
+	arkmanager backup @all
+fi
+
 
 # Launching ark server
 if [[ "$UPDATEONSTART" -eq 0 ]]; then
