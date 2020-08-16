@@ -3,5 +3,5 @@
 for cfg in /ark/config/instances/*.cfg; do
     [[ "$cfg" == "main.cfg" ]] && continue
 
-    /usr/bin/local/ark-create-shallow "$cfg"
+    /usr/local/bin/ark-create-shallow "$cfg"
 done
