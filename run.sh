@@ -67,6 +67,7 @@ if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ]
 fi
 
 # Generate all necessary shallow instances
+mkdir -p /ark/server/instances
 ark-create-all-shallows
 
 # linking main save
@@ -111,3 +112,4 @@ read -r < /tmp/FIFO &
 wait
 
 arkmanager stop @all --saveworld
+rm -Rf /ark/server/instances

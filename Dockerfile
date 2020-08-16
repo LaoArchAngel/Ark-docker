@@ -48,7 +48,6 @@ COPY arkmanager-user.cfg /home/steam/arkmanager.cfg
 COPY instance.cfg /home/steam/instance.cfg
 
 RUN mkdir /ark \
- && mkdir /ark/instances \
  && mkdir -p /home/steam/Steam/steamapps/workshop \
  && chown steam /ark && chmod 755 /ark \
  && chown -R steam:steam /home/steam
