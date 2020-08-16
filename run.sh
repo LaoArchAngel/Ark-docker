@@ -75,6 +75,9 @@ else
 	fi
 fi
 
+# Generate all necessary shallow instances
+ark-create-all-shallows
+
 # linking main save
 ln -s /ark/saves/main /ark/server/install/ShooterGame/Saved
 
