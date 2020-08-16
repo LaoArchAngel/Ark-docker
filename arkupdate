@@ -13,19 +13,20 @@ updateNeeded=$?
 for cfg in /ark/config/instances; do
     # don't need to worry about main instance
     [[ "$cfg" == "main.cfg" ]] && continue
+
     instName="$(basename -s .cfg ${cfg})"
-    
     shallowPath="$(/usr/local/bin/check-shallow-ark "$cfg")"
+    echo "Updating "$instName""
     
     # Not shallow
     if [[ -z "$shallowPath" ]]; then
         # non-shallow instances have to be updated separately
         /usr/local/bin/arkmanager update "@${instName}" --no-download
-        continue
+    else
+        /usr/local/bin/ark-gen-shallow "$shallowPath"
+        /usr/local/bin/ark-set-shallow-save "$shallowPath" "$instName"
     fi
 
-    /usr/local/bin/ark-gen-shallow "$shallowPath"
-    /usr/local/bin/ark-set-shallow-save "$shallowPath" "$instName"
 done
 
 /usr/local/bin/arkmanager start @all
