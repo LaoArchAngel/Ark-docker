@@ -5,7 +5,7 @@ cfg="$1"
 [[ -z "$cfg" ]] && exit 1
 [[ ! -f "$cfg" ]] && exit 2
 
-instPath=/usr/local/bin/check-shallow-ark "$cfg"
+instPath="$(/usr/local/bin/check-shallow-ark "$cfg")"
 [[ -z "$instPath" ]] && exit 3
 
 instName=$(basename -s .cfg "$cfg")
