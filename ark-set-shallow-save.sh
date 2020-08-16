@@ -11,7 +11,8 @@ targetSave="${instPath}/ShooterGame/Saved"
 
 echo "Linking save path "$fullSave" to shallow instance "$targetSave""
 
-[[ ! -d "$fullSave" ]] && mkdir "$fullSave"
+mkdir -p "$fullSave"
 
 [[ -d "$targetSave" ]] && rm -Rf "$targetSave"
-ln -s "$fullSave" "$targetSave"
+ln -sf "$fullSave" "$targetSave"
+[[ "$saveName" != "main" ]] && ln -sf /ark/saves/main/clusters "${targetSave}/clusters"
