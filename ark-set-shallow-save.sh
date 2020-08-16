@@ -13,6 +13,6 @@ echo "Linking save path "$fullSave" to shallow instance "$targetSave""
 
 mkdir -p "$fullSave"
 
-[[ -d "$targetSave" ]] && rm -Rf "$targetSave"
+rm -Rf "$targetSave"
 ln -sf "$fullSave" "$targetSave"
 [[ "$saveName" -ne "main" ]] && ln -sf /ark/saves/main/clusters "${targetSave}/clusters"

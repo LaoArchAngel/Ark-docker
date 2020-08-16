@@ -67,11 +67,12 @@ if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ]
 fi
 
 # Generate all necessary shallow instances
+rm -Rf /ark/server/instances
 mkdir -p /ark/server/instances
 ark-create-all-shallows
 
 # linking main save
-[[ -d /ark/server/install/ShooterGame/Saved ]] && rm -Rf /ark/server/install/ShooterGame/Saved
+rm -Rf /ark/server/install/ShooterGame/Saved
 ln -s /ark/saves/main /ark/server/install/ShooterGame/Saved
 
 #copying the actual configs
