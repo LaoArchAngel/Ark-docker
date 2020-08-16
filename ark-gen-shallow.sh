@@ -7,7 +7,7 @@ instPath=$1
 echo "Generating shallow instance @ $instPath"
 [[ -d "$instPath" ]] &&  rm -Rf "$instPath"
 
-cp -Ras /ark/server/install "$instPath"
+cp -Ral /ark/server/install "$instPath"
 
 modPath="${instPath}/ShooterGame/Content/Mods"
 rm -Rf "$modPath"

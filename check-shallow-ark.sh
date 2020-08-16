@@ -9,11 +9,11 @@ arkroot=$(grep "arkserverroot" "$cfg")
 [[ -n "$arkroot" ]] && arkroot="$(echo "$arkroot" | cut -d = -f 2)"
 
 if [[ -n "$arkroot" ]]; then
-    [[ "$arkroot" != "/ark/instances"* ]] && exit 0
+    [[ "$arkroot" != "/ark/server/instances"* ]] && exit 0
 fi
 
 if [[ -z "$arkroot" ]]; then
-    arkroot="/ark/instances/$(basename -s .cfg "$cfg")"
+    arkroot="/ark/server/instances/$(basename -s .cfg "$cfg")"
     echo "" >> "$cfg" #ensure empty line
     echo "arkserverroot="$arkroot"" >> "$cfg" # save new arkroot
 fi
