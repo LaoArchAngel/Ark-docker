@@ -13,13 +13,17 @@ export TERM=linux
 function stop {
 	if [ "${BACKUPONSTOP}" -eq 1 ] && [ "$(ls -A /ark/server/install/ShooterGame/Saved)" ]; then
 		echo "[Backup on stop]"
-		arkmanager backup
+		arkmanager saveworld @all
+		arkmanager backup @all
 	fi
 	if [ "${WARNONSTOP}" -eq 1 ];then
-	    arkmanager stop --warn
+	    arkmanager stop @all --warn
 	else
-	    arkmanager stop
+	    arkmanager stop @all
 	fi
+
+	rm -Rf /ark/server/instances
+
 	exit
 }
 
@@ -94,23 +98,21 @@ fi
 
 # Launching ark server
 if [[ "$UPDATEONSTART" -eq 0 ]]; then
-	arkmanager start @all
+	arkmanager start @all --noautoupdate
 else
-	arkmanager start @all
+	arkmanager start @main
+	arkmanager start @all --noautoupdate
 fi
 
 # Installing crontab for user steam
 echo "Loading crontab..."
 crontab /ark/config/crontab
 
-
 # Stop server in case of signal INT or TERM
 echo "Server Finished Loading!  Waiting for stop..."
-trap stop INT
-trap stop TERM
+trap "stop" SIGTERM
+trap "stop" INT
+trap "stop" TERM
 
 read -r < /tmp/FIFO &
-wait
-
-arkmanager stop @all --saveworld
-rm -Rf /ark/server/instances
+wait $!
