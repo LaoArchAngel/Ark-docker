@@ -16,7 +16,7 @@ for cfg in /ark/config/instances; do
 
     instName="$(basename -s .cfg ${cfg})"
     shallowPath="$(/usr/local/bin/check-shallow-ark "$cfg")"
-    echo "Updating "$instName""
+    echo "Updating $instName"
     
     # Not shallow
     if [[ -z "$shallowPath" ]]; then

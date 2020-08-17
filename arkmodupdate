@@ -1,20 +1,28 @@
 #!/bin/bash
 
+/usr/local/bin/arkmanager checkmodupdate --revstatus
+updateNeeded=$?
+
+case $updateNeeded in
+  0 )
+    exit 0
+    ;;
+
+  4 )
+    exit 1
+    ;;
+
+  * )
+    echo "Starting mod updates :: $updateNeeded"
+    ;;
+esac
+
+/usr/local/bin/arkmanager update --update-mods --warn
+
 mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
-needUpdate=()
 
-for inst in "${instances[@]}"; do
-  /usr/local/bin/arkmanager checkmodupdate "@$inst" --revstatus
-  updateNeeded=$?
-
-  if [[ "$updateNeeded" -ne 0 ]]; then
-    needUpdate+=( "$inst" )
-    /usr/local/bin/arkmanager stop "@$inst" --warn --warnreason="Mod update"
-  fi
-done
-
-for instName in "${needUpdate[@]}" ; do
-    echo "Updating mods for "$instName""
+for instName in "${instances[@]}" ; do
+    echo "Updating mods for $instName"
 
     cfg="/ark/config/instances/${instName}.cfg"
     upd="@${instName}"
@@ -23,22 +31,12 @@ for instName in "${needUpdate[@]}" ; do
     # Not shallow
     if [[ -z "$shallowPath" ]]; then
         # non-shallow instances have to be updated separately
-        /usr/local/bin/arkmanager update "$upd" --update-mods
-        /usr/local/bin/arkmanager start "$upd" --noautoupdate
+        /usr/local/bin/arkmanager update "$upd" --update-mods --warn
     else
-        # First make a link to the main mod folder
-        modPath="${shallowPath}/ShooterGame/Content/Mods"
-        rm -Rf "$modPath"
-        ln -s /ark/server/install/ShooterGame/Content/Mods "$modPath"
-
-        # Now update the mods
-        /usr/local/bin/arkmanager update "$upd" --update-mods
-
         # Finally, go back to hardlinks
+        /usr/local/bin/arkmanager stop "$upd" --warn --warnreason="Mod Update"
         /usr/local/bin/ark-gen-shallow "$shallowPath"
         /usr/local/bin/ark-set-shallow-save "$shallowPath" "$instName"
         /usr/local/bin/arkmanager start "$upd" --noautoupdate
     fi
 done
-
-/usr/local/bin/arkmanager start @all --noautoupdate
