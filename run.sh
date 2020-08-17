@@ -100,8 +100,7 @@ fi
 if [[ "$UPDATEONSTART" -eq 0 ]]; then
 	arkmanager start @all --noautoupdate
 else
-	arkmanager start @main
-	arkmanager start @all --noautoupdate
+  arkupdate
 fi
 
 # Installing crontab for user steam
