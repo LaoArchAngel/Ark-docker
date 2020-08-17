@@ -4,6 +4,7 @@ cfg="$1"
 
 [[ -z "$cfg" ]] && exit 1
 [[ ! -f "$cfg" ]] && exit 2
+[[ "$cfg" == *"/main.cfg" ]] && exit 0
 
 arkroot=$(grep "arkserverroot" "$cfg")
 [[ -n "$arkroot" ]] && arkroot="$(echo "$arkroot" | cut -d = -f 2)"
