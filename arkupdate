@@ -10,11 +10,11 @@ updateNeeded=$?
 /usr/local/bin/arkmanager stop @all --warn --warnreason="Server update" --saveworld --backup
 /usr/local/bin/arkmanager update --no-download
 
-for cfg in /ark/config/instances; do
+for cfg in /ark/config/instances/*.cfg; do
     # don't need to worry about main instance
-    [[ "$cfg" == "main.cfg" ]] && continue
+    [[ "$cfg" == *"main.cfg" ]] && continue
 
-    instName="$(basename -s .cfg ${cfg})"
+    instName=$(basename -s .cfg "$cfg")
     shallowPath="$(/usr/local/bin/check-shallow-ark "$cfg")"
     echo "Updating $instName"
     
