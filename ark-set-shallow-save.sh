@@ -15,4 +15,4 @@ mkdir -p "$fullSave"
 
 rm -Rf "$targetSave"
 ln -sf "$fullSave" "$targetSave"
-[ "$saveName" -ne "main" ] && ln -sf /ark/saves/main/clusters "${targetSave}/clusters"
+[[ "$saveName" != "main" ]] && ln -sf /ark/saves/main/clusters "${targetSave}/clusters"
