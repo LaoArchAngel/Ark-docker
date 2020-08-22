@@ -19,14 +19,16 @@ esac
 
 /usr/local/bin/arkmanager update --update-mods --warn
 
-mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
+for cfg in /ark/config/instances/*.cfg; do
+    # don't need to worry about main instance
+    [[ "$cfg" == *"main.cfg" ]] && continue
 
-for instName in "${instances[@]}" ; do
+    instName=$(basename -s .cfg "$cfg")
+    shallowPath="$(/usr/local/bin/check-shallow-ark "$cfg")"
+
     echo "Updating mods for $instName"
 
-    cfg="/ark/config/instances/${instName}.cfg"
     upd="@${instName}"
-    shallowPath="$(/usr/local/bin/check-shallow-ark "$cfg")"
     
     # Not shallow
     if [[ -z "$shallowPath" ]]; then
@@ -37,6 +39,7 @@ for instName in "${instances[@]}" ; do
         /usr/local/bin/arkmanager stop "$upd" --warn --warnreason="Mod Update"
         /usr/local/bin/ark-gen-shallow "$shallowPath"
         /usr/local/bin/ark-set-shallow-save "$shallowPath" "$instName"
-        /usr/local/bin/arkmanager start "$upd" --noautoupdate
     fi
 done
+
+/usr/local/bin/arkmanager start @all --noautoupdate
