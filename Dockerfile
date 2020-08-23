@@ -55,9 +55,15 @@ RUN mkdir /ark \
 # Define default config file in /etc/arkmanager
 COPY arkmanager-system.cfg /etc/arkmanager/arkmanager.cfg
 
-VOLUME /ark/config
-VOLUME /ark/saves
+# Intended to be the install share.  Only a master container will update this.
+VOLUME /ark/server/install
+# Intended to be unique for each container.  Contains all save information.
+VOLUME /ark/server/install/ShooterGame/Saved
+# Intended to be unique for each container.  Contains configuration.  Good candidate for a bind.
+VOLUME /ark/server/install/ShooterGame/Saved/Config/LinuxServer
+# Can be shared as long as the instance name is different.  Should be bound.
 VOLUME /ark/backup
+# Can be shared as long as the instance name is different.  Should be bound.
 VOLUME /ark/log
 
 
