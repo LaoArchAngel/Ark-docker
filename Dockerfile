@@ -10,7 +10,8 @@ ENV SERVERPASSWORD="" \
     ARK_UID=1000 \
     ARK_GID=1000 \
     TZ=UTC \
-    MASTER=0
+    MASTER=0 \
+    INSTANCE_NAME="main"
 
 ## Install dependencies
 RUN dnf clean packages
