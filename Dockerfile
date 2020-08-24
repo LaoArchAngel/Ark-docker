@@ -9,7 +9,8 @@ ENV SERVERPASSWORD="" \
     WARNONSTOP=1 \
     ARK_UID=1000 \
     ARK_GID=1000 \
-    TZ=UTC
+    TZ=UTC \
+    MASTER=0
 
 ## Install dependencies
 RUN dnf clean packages
