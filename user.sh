@@ -12,9 +12,9 @@ if [ ! "$(id -g steam)" -eq "$ARK_GID" ]; then
 fi
 
 # Set Timezone
-if [ -f /usr/share/zoneinfo/${TZ} ]; then
+if [ -f /usr/share/zoneinfo/"${TZ}" ]; then
     echo "Setting timezone to '${TZ}'..."
-    ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
+    ln -sf /usr/share/zoneinfo/"${TZ}" /etc/localtime
 else
     echo "Timezone '${TZ}' does not exist!"
 fi

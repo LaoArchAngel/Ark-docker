@@ -14,15 +14,15 @@ SHELL=/bin/bash
 #5 * * * * /usr/local/bin/arkupdate >> /ark/log/crontab.log 2>&1
 
 # Backup @ 20 & 40
-#0,20,40 * * * * /usr/local/bin/arkmanager saveworld @all && /usr/local/bin/arkmanager backup @all >> /ark/log/crontab.log 2>&1
+#0,20,40 * * * * /usr/local/bin/arkmanager saveworld && /usr/local/bin/arkmanager backup >> /ark/log/crontab.log 2>&1
 
 # Clean backups
 #10 0 * * * find /ark/backup -type f -mtime +7 -delete
 #15 0 * * * find /ark/backup -type d -empty -delete
 
-#0 0 * * * cp /ark/log/arkserver.log /ark/log/arkserver.`date +%Y%m%d`.log && cat /dev/null > /ark/log/arkserver.log
-#0 0 * * * cp /ark/log/arkmanager.log /ark/log/arkmanager.`date +%Y%m%d`.log && cat /dev/null > /ark/log/arkmanager.log
-#0 0 * * * cp /ark/log/crontab.log /ark/log/crontab.`date +%Y%m%d`.log && cat /dev/null > /ark/log/crontab.log
+#0 0 * * * cp /ark/log/arkserver.log "/ark/log/arkserver.$(date +%Y%m%d).log" && cat /dev/null > /ark/log/arkserver.log
+#0 0 * * * cp /ark/log/arkmanager.log "/ark/log/arkmanager.$(date +%Y%m%d).log" && cat /dev/null > /ark/log/arkmanager.log
+#0 0 * * * cp /ark/log/crontab.log "/ark/log/crontab.$(date +%Y%m%d).log" && cat /dev/null > /ark/log/crontab.log
 
 # Remove core files from binaries
 #0 * * * * find /ark/server/install/ShooterGame/Binaries -type f -name "core\.*" -delete
