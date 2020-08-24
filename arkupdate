@@ -6,27 +6,14 @@ updateNeeded=$?
 
 [[ "$updateNeeded" -eq 0 ]] && exit 0
 
-/usr/local/bin/arkmanager update --downloadonly
-/usr/local/bin/arkmanager stop @all --warn --warnreason="Server update" --saveworld --backup
-/usr/local/bin/arkmanager update --no-download
+if [ "$MASTER" -eq 1 ]; then
+  /usr/local/bin/arkmanager update --warn --backup
+  exit 0;
+fi
 
-for cfg in /ark/config/instances/*.cfg; do
-    # don't need to worry about main instance
-    [[ "$cfg" == *"main.cfg" ]] && continue
+currentVersion=$(xargs < /ark/server/install/version.txt)
+runningVersion=$(arkmanager status | grep "Server version" | grep "$currentVersion" )
 
-    instName=$(basename -s .cfg "$cfg")
-    shallowPath="$(/usr/local/bin/check-shallow-ark "$cfg")"
-    echo "Updating $instName"
-    
-    # Not shallow
-    if [[ -z "$shallowPath" ]]; then
-        # non-shallow instances have to be updated separately
-        /usr/local/bin/arkmanager update "@${instName}" --no-download
-    else
-        /usr/local/bin/ark-gen-shallow "$shallowPath"
-        /usr/local/bin/ark-set-shallow-save "$shallowPath" "$instName"
-    fi
+[[ -n "$runningVersion" ]] && exit 0
 
-done
-
-/usr/local/bin/arkmanager start @all --noautoupdate
+/usr/local/bin/arkmanager restart --backup --warn --warnreason="Server update" --noautoupdate --alwaysrestart
