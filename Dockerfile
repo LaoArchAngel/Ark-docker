@@ -63,6 +63,8 @@ VOLUME /ark/server/install
 VOLUME /ark/server/install/ShooterGame/Saved
 # Intended to be unique for each container.  Contains configuration.  Good candidate for a bind.
 VOLUME /ark/server/install/ShooterGame/Saved/Config/LinuxServer
+# Intended to be unique for each container.  Contains configuration of arkmanager.  Good candidate for a bind.
+VOLUME /ark/config
 # Can be shared as long as the instance name is different.  Should be bound.
 VOLUME /ark/backup
 # Can be shared as long as the instance name is different.  Should be bound.
