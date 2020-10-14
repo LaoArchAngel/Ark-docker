@@ -24,6 +24,7 @@ chown -R steam:steam /ark /home/steam
 
 # avoid error message when su -p (we need to read the /root/.bash_rc )
 chmod -R 777 /root/
+touch /etc/arkmanager/instances/"${INSTANCE_NAME}.cfg"
 
 # Starting cron
 # If there is uncommented line in the file
