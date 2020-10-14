@@ -5,22 +5,22 @@ services:
     container_name: ark_island
     image: boerngenschmidt/ark-docker
     environment:
-      - MASTER=1
-      - INSTANCE_NAME=island
-      - SESSIONNAME=Ark Docker
-      - SERVERMAP=TheIsland
-      - MAX_PLAYERS=70
-      - SERVERPASSWORD=""
-      - ADMINPASSWORD=adminpassword
-      - SERVERPORT=27015
-      - STEAMPORT=7777
-      - BACKUPONSTART=1
-      - BACKUPONSTOP=1
-      - WARNONSTOP=1
-      - UPDATEONSTART=1
-      - TZ=UTC
-      - ARK_GID=1000
-      - ARK_UID=1000
+      MASTER=1
+      INSTANCE_NAME=island
+      SESSIONNAME=Ark Docker
+      SERVERMAP=TheIsland
+      MAX_PLAYERS=70
+      SERVERPASSWORD=""
+      ADMINPASSWORD=adminpassword
+      SERVERPORT=27015
+      STEAMPORT=7777
+      BACKUPONSTART=1
+      BACKUPONSTOP=1
+      WARNONSTOP=1
+      UPDATEONSTART=1
+      TZ=UTC
+      ARK_GID=1000
+      ARK_UID=1000
     volumes:
       - arkserver:/ark/server/install
       - ./configs/island/server:/ark/server/install/ShooterGame/Saved/Config/LinuxServer
@@ -28,28 +28,28 @@ services:
       - ./log:/ark/log
       - ./backup:/ark/backup
     ports:
-      - "7776-7778:7776-7778"
-      - "7776-7778:7776-7778/udp"
-      - "27014-27016:27014-27016"
-      - "27014-27016:27014-27016/udp"
+      - "7777-7778:7777-7778"
+      - "7777-7778:7777-7778/udp"
+      - "27015-27016:27015-27016"
+      - "27015-27016:27015-27016/udp"
     restart: unless-stopped
   scorched:
     container_name: ark_se
     image: boerngenschmidt/ark-docker
     environment:
-      - MASTER=0
-      - INSTANCE_NAME=scorched
-      - SESSIONNAME="Ark Docker: SE"
-      - SERVERMAP=ScorchedEarth_P
-      - SERVERPORT=27017
-      - STEAMPORT=7779
-      - BACKUPONSTART=1
-      - BACKUPONSTOP=1
-      - WARNONSTOP=1
-      - UPDATEONSTART=1
-      - TZ=UTC
-      - ARK_GID=1000
-      - ARK_UID=1000
+      MASTER=0
+      INSTANCE_NAME=scorched
+      SESSIONNAME="Ark Docker: SE"
+      SERVERMAP=ScorchedEarth_P
+      SERVERPORT=27017
+      STEAMPORT=7779
+      BACKUPONSTART=1
+      BACKUPONSTOP=1
+      WARNONSTOP=1
+      UPDATEONSTART=1
+      TZ=UTC
+      ARK_GID=1000
+      ARK_UID=1000
     volumes:
       - arkserver:/ark/server/install
       - ./configs/se/server:/ark/server/install/ShooterGame/Saved/Config/LinuxServer
