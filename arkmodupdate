@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$MASTER" -eq 1 ]; then
+if [[ "$MASTER" -eq 1 ]] ; then
   /usr/local/bin/arkmanager update --warn --backup
   exit 0;
 fi
