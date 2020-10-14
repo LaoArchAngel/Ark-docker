@@ -1,12 +1,12 @@
 #!/bin/bash
 
-/usr/local/bin/arkmanager checkupdate
-
-updateNeeded=$?
-
-[[ "$updateNeeded" -eq 0 ]] && exit 0
-
 if [ "$MASTER" -eq 1 ]; then
+  /usr/local/bin/arkmanager checkupdate
+
+  updateNeeded=$?
+
+  [[ "$updateNeeded" -eq 0 ]] && exit 0
+
   /usr/local/bin/arkmanager update --warn --backup
   exit 0;
 fi
