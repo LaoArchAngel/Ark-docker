@@ -14,6 +14,6 @@ fi
 currentVersion=$(xargs < /ark/server/install/version.txt)
 runningVersion=$(arkmanager status | grep "Server version" | grep "$currentVersion" )
 
-[[ "$runningVersion" == "$currentVersion" ]] && exit 0
+[[ -n "$runningVersion" ]] && exit 0
 
 /usr/local/bin/arkmanager restart --backup --warn --warnreason="Server update" --noautoupdate --alwaysrestart
