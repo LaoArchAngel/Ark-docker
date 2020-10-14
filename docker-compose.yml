@@ -23,6 +23,7 @@ services:
       ARK_UID=1000
     volumes:
       - arkserver:/ark/server/install
+      - arkcluster:ark/server/install/ShooterGame/Saved/clusters
       - ./configs/island/server:/ark/server/install/ShooterGame/Saved/Config/LinuxServer
       - ./configs/island/manager:/ark/config
       - ./log:/ark/log
@@ -52,6 +53,7 @@ services:
       ARK_UID=1000
     volumes:
       - arkserver:/ark/server/install
+      - arkcluster:ark/server/install/ShooterGame/Saved/clusters
       - ./configs/se/server:/ark/server/install/ShooterGame/Saved/Config/LinuxServer
       - ./configs/se/manager:/ark/config
       - ./log:/ark/log
