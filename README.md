@@ -117,16 +117,28 @@ To add mods, you only need to change the variable ark_GameModIds in *arkmanager.
 + __ARK_GID__ : ARK_GID of the user used. Owner of the volume /ark (default : 1000)
 
 ## Volumes
-+ __/ark__ : Working directory :
-    + /ark/server/install : Server files and data.  Meant to be a volume!  Only the master container will update this.
-    + /ark/server/install/ShooterGame/Saved : Contains save information for the container. Should be unique per
-        container. This can be a bind, but safe as a volume. Better to depend on backups.
-    + /ark/server/install/ShooterGame/Saved/Config/LinuxServer : Intended to be unique for each container. Configuration
-        folder where Game.ini and GameUserSettings.ini live.  Good candidate for a bind.
-    + /ark/config : Intended to be unique for each container.  Contains configuration of arkmanager.  Good candidate for
-        a bind.
-    + /ark/log : Can be shared as long as INSTANCE_NAME is unique.  Should be a bind.
-    + /ark/backup : Can be shared as long as INSTANCE_NAME is unique.  Should be a bind.
++ /ark/server/install
+    + Server files and data.
+    + Meant to be a volume!
+    + Only the master container will update this.
++ /ark/server/install/ShooterGame/Saved
+    + Contains save information for the container.
+    + Should be unique per container.
+    + This can be a bind, but safe as a volume. Better to depend on backups.
++ /ark/server/install/ShooterGame/Saved/Config/LinuxServer
+    + Intended to be unique for each container.
+    + Configuration folder where Game.ini and GameUserSettings.ini live.
+    + Good candidate for a bind.
++ /ark/config
+    + Intended to be unique for each container.
+    + Contains configuration files for arkmanager.
+    + Good candidate for a bind.
++ /ark/log
+    + Can be shared as long as INSTANCE_NAME is unique.
+    + Should be a bind.
++ /ark/backup
+    + Can be shared as long as INSTANCE_NAME is unique.
+    + Should be a bind.
  
 ## Expose
 + Port : __STEAMPORT__ : Steam port (default: 7778)
