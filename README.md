@@ -99,6 +99,8 @@ To add mods, you only need to change the variable ark_GameModIds in *arkmanager.
 - run `docker-compose up -d ark`
 
 ## Variables
++ __MASTER__ : Whether this is the master instance, responsible for updates. (default : 0)
++ __INSTANCE_NAME__ : Name of the ark instance for ark manager config. (default : "main")
 + __SESSIONNAME__ : Name of your ark server (default : "Ark Docker")
 + __SERVERMAP__ : Map of your ark server (default : "TheIsland")
 + __SERVERPASSWORD__ : Password of your ark server (default : "")
@@ -116,18 +118,16 @@ To add mods, you only need to change the variable ark_GameModIds in *arkmanager.
 
 ## Volumes
 + __/ark__ : Working directory :
-    + /ark/server/install : Server files and data.
-    + /ark/log : logs
-    + /ark/backup : backups
-    + /ark/arkmanager.cfg : config file for Ark Server Tools
-    + /ark/crontab : crontab config file
-    + /ark/Game.ini : ark game.ini config file
-    + /ark/GameUserSetting.ini : ark gameusersetting.ini config file
-    + /ark/template : Default config files
-    + /ark/template/arkmanager.cfg : default config file for Ark Server Tools
-    + /ark/template/crontab : default config file for crontab
-    + /ark/server/staging : default directory if you use the --downloadonly option when updating.
-
+    + /ark/server/install : Server files and data.  Meant to be a volume!  Only the master container will update this.
+    + /ark/server/install/ShooterGame/Saved : Contains save information for the container. Should be unique per
+        container. This can be a bind, but safe as a volume. Better to depend on backups.
+    + /ark/server/install/ShooterGame/Saved/Config/LinuxServer : Intended to be unique for each container. Configuration
+        folder where Game.ini and GameUserSettings.ini live.  Good candidate for a bind.
+    + /ark/config : Intended to be unique for each container.  Contains configuration of arkmanager.  Good candidate for
+        a bind.
+    + /ark/log : Can be shared as long as INSTANCE_NAME is unique.  Should be a bind.
+    + /ark/backup : Can be shared as long as INSTANCE_NAME is unique.  Should be a bind.
+ 
 ## Expose
 + Port : __STEAMPORT__ : Steam port (default: 7778)
 + Port : __SERVERPORT__ : server port (default: 27015)
