@@ -125,6 +125,10 @@ To add mods, you only need to change the variable ark_GameModIds in *arkmanager.
     + Contains save information for the container.
     + Should be unique per container.
     + This can be a bind, but safe as a volume. Better to depend on backups.
++ ark/server/install/ShooterGame/Saved/clusters
+    + Intended to be shared.
+    + Contains the cluster files for transfers.
+    + Should be a volume.
 + /ark/server/install/ShooterGame/Saved/Config/LinuxServer
     + Intended to be unique for each container.
     + Configuration folder where Game.ini and GameUserSettings.ini live.

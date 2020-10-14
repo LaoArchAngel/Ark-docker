@@ -61,6 +61,8 @@ COPY arkmanager-system.cfg /etc/arkmanager/arkmanager.cfg
 VOLUME /ark/server/install
 # Intended to be unique for each container.  Contains all save information.
 VOLUME /ark/server/install/ShooterGame/Saved
+# Intended to be shared.  Contains the cluster files for transfers.  Should be a volume.
+VOLUME /ark/server/install/ShooterGame/Saved/clusters
 # Intended to be unique for each container.  Contains configuration.  Good candidate for a bind.
 VOLUME /ark/server/install/ShooterGame/Saved/Config/LinuxServer
 # Intended to be unique for each container.  Contains configuration of arkmanager.  Good candidate for a bind.
