@@ -11,4 +11,4 @@ lastUpdate=$(stat --printf="%Y\n" /ark/server/install/ShooterGame/Content/Mods/*
 [[ "$lastUpdate" == "$lastCheck" ]] && exit 0
 
 /usr/local/bin/arkmanager restart --warn --warnreason="Mod Update" --backup --noautoupdate --alwaysrestart
-echo "$lastCheck" > ~/.arkmodlastcheck
+echo "$lastUpdate" > ~/.arkmodlastcheck
