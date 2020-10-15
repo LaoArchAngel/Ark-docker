@@ -57,6 +57,9 @@ mv /ark/config/arkmanager.cfg.temp /ark/config/arkmanager.cfg
 
 [[ "$MASTER" -eq 1 ]] && touch /ark/.master
 
+lastModUpdate=$(stat --printf="%Y\n" /ark/server/install/ShooterGame/Content/Mods/* | sort -nr | head -n 1)
+echo "$lastModUpdate" > /ark/.arkmodlastcheck
+
 if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ];then
 	echo "No game files found. Installing..."
 	mkdir -p /ark/server/install/ShooterGame/Content/Mods

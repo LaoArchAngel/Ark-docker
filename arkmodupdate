@@ -8,9 +8,9 @@ if [[ "$MASTER" -eq 1 ]] ; then
 fi
 
 lastUpdate=$(stat --printf="%Y\n" /ark/server/install/ShooterGame/Content/Mods/* | sort -nr | head -n 1)
-[[ -f  ~/.arkmodlastcheck ]] && lastCheck=$(cat ~/.arkmodlastcheck)
+[[ -f  /ark/.arkmodlastcheck ]] && lastCheck=$(cat /ark/.arkmodlastcheck)
 
 [[ "$lastUpdate" == "$lastCheck" ]] && exit 0
 
 /usr/local/bin/arkmanager restart --warn --warnreason="Mod Update" --backup --noautoupdate --alwaysrestart
-echo "$lastUpdate" > ~/.arkmodlastcheck
+echo "$lastUpdate" > /ark/.arkmodlastcheck
