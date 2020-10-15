@@ -12,7 +12,7 @@ if [[ "$MASTER" -eq 1 ]] ; then
 fi
 
 currentVersion=$(xargs < /ark/server/install/version.txt)
-runningVersion=$(arkmanager status | grep "Server version" | grep "$currentVersion" )
+runningVersion=$(/usr/local/bin/arkmanager status | grep "Server version" | grep "$currentVersion" )
 
 [[ -n "$runningVersion" ]] && exit 0
 
