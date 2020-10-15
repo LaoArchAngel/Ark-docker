@@ -55,6 +55,8 @@ cp -n /home/steam/crontab /ark/config/crontab
 (envsubst < /ark/config/arkmanager.cfg) > /ark/config/arkmanager.cfg.temp
 mv /ark/config/arkmanager.cfg.temp /ark/config/arkmanager.cfg
 
+[[ "$MASTER" -eq 1 ]] && touch /ark/.master
+
 if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ];then
 	echo "No game files found. Installing..."
 	mkdir -p /ark/server/install/ShooterGame/Content/Mods

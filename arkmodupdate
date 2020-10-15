@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[[ -f /ark/.master ]] && MASTER=1
+
 if [[ "$MASTER" -eq 1 ]] ; then
   /usr/local/bin/arkmanager update --warn --backup
   exit 0;
