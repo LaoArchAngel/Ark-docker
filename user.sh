@@ -20,6 +20,7 @@ else
 fi
 
 # Put steam owner of directories (if the uid changed, then it's needed)
+mkdir -p /ark/server/install/ShooterGame/Saved/Config/LinuxServer
 chown -Rf steam:steam /ark /ark/server/install/ShooterGame/Saved /home/steam
 chmod -Rf 777 /ark/server/install/ShooterGame/Saved
 
