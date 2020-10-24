@@ -43,6 +43,7 @@ mkdir -p /ark/log
 mkdir -p /ark/backup
 mkdir -p /ark/server/staging
 mkdir -p /home/steam/.config/arkmanager
+mkdir -p /ark/server/install/ShooterGame/Saved/Config/LinuxServer
 
 cp -n /home/steam/arkmanager.cfg /ark/config/arkmanager.cfg
 cp -n /home/steam/crontab /ark/config/crontab
