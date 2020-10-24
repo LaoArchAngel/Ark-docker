@@ -1,14 +1,14 @@
 #!/bin/sh
 
 # Change the ARK_UID if needed
-if [ ! "$(id -u steam)" -eq "$ARK_UID" ]; then 
+if [ ! "$(id -u steam)" -eq "$ARK_UID" ]; then
 	echo "Changing steam uid to $ARK_UID."
-	usermod -o -u "$ARK_UID" steam ; 
+	usermod -o -u "$ARK_UID" steam ;
 fi
 # Change gid if needed
-if [ ! "$(id -g steam)" -eq "$ARK_GID" ]; then 
+if [ ! "$(id -g steam)" -eq "$ARK_GID" ]; then
 	echo "Changing steam gid to $ARK_GID."
-	groupmod -o -g "$ARK_GID" steam ; 
+	groupmod -o -g "$ARK_GID" steam ;
 fi
 
 # Set Timezone
@@ -20,7 +20,8 @@ else
 fi
 
 # Put steam owner of directories (if the uid changed, then it's needed)
-chown -R steam:steam /ark /home/steam
+chown -Rf steam:steam /ark /ark/server/install/ShooterGame/Saved /home/steam
+chmod -Rf 777 /ark/server/install/ShooterGame/Saved
 
 # avoid error message when su -p (we need to read the /root/.bash_rc )
 chmod -R 777 /root/
