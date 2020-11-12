@@ -3,7 +3,7 @@
 [[ -f /ark/.master ]] && MASTER=1
 
 if [[ "$MASTER" -eq 1 ]] ; then
-  /usr/local/bin/arkmanager update --warn --backup
+  /usr/local/bin/arkmanager update --update-mods --warn --warnreason="Mod Update" --backup
   exit 0;
 fi
 
