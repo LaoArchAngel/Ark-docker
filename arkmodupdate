@@ -1,45 +1,16 @@
 #!/bin/bash
 
-/usr/local/bin/arkmanager checkmodupdate --revstatus
-updateNeeded=$?
+[[ -f /ark/.master ]] && MASTER=1
 
-case $updateNeeded in
-  0 )
-    exit 0
-    ;;
+if [[ "$MASTER" -eq 1 ]] ; then
+  /usr/local/bin/arkmanager update --update-mods --warn --warnreason="Mod Update" --backup
+  exit 0;
+fi
 
-  4 )
-    exit 1
-    ;;
+lastUpdate=$(stat --printf="%Y\n" /ark/server/install/ShooterGame/Content/Mods/* | sort -nr | head -n 1)
+[[ -f  /ark/.arkmodlastcheck ]] && lastCheck=$(cat /ark/.arkmodlastcheck)
 
-  * )
-    echo "Starting mod updates :: $updateNeeded"
-    ;;
-esac
+[[ "$lastUpdate" == "$lastCheck" ]] && exit 0
 
-/usr/local/bin/arkmanager update --update-mods --warn
-
-for cfg in /ark/config/instances/*.cfg; do
-    # don't need to worry about main instance
-    [[ "$cfg" == *"main.cfg" ]] && continue
-
-    instName=$(basename -s .cfg "$cfg")
-    shallowPath="$(/usr/local/bin/check-shallow-ark "$cfg")"
-
-    echo "Updating mods for $instName"
-
-    upd="@${instName}"
-    
-    # Not shallow
-    if [[ -z "$shallowPath" ]]; then
-        # non-shallow instances have to be updated separately
-        /usr/local/bin/arkmanager update "$upd" --update-mods --warn
-    else
-        # Finally, go back to hardlinks
-        /usr/local/bin/arkmanager stop "$upd" --warn --warnreason="Mod Update"
-        /usr/local/bin/ark-gen-shallow "$shallowPath"
-        /usr/local/bin/ark-set-shallow-save "$shallowPath" "$instName"
-    fi
-done
-
-/usr/local/bin/arkmanager start @all --noautoupdate
+/usr/local/bin/arkmanager restart --warn --warnreason="Mod Update" --backup --noautoupdate --alwaysrestart
+echo "$lastUpdate" > /ark/.arkmodlastcheck

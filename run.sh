@@ -13,16 +13,14 @@ export TERM=linux
 function stop {
 	if [ "${BACKUPONSTOP}" -eq 1 ] && [ "$(ls -A /ark/server/install/ShooterGame/Saved)" ]; then
 		echo "[Backup on stop]"
-		arkmanager saveworld @all
-		arkmanager backup @all
+		arkmanager saveworld
+		arkmanager backup
 	fi
-	if [ "${WARNONSTOP}" -eq 1 ];then
-	    arkmanager stop @all --warn
+	if [ "${WARNONSTOP}" -eq 1 ];then	
+	    arkmanager stop --warn
 	else
-	    arkmanager stop @all
+	    arkmanager stop
 	fi
-
-	rm -Rf /ark/server/instances
 
 	exit
 }
@@ -38,19 +36,16 @@ mkdir -p /ark/config/template
 # We overwrite the template file each time
 cp -f /home/steam/arkmanager.cfg /ark/config/template/arkmanager.cfg
 cp -f /home/steam/crontab /ark/config/template/crontab
-cp -f /home/steam/instance.cfg /ark/config/template/instance.cfg
 
 # Creating directory tree && symbolic link
 mkdir -p /ark/config
 mkdir -p /ark/log
 mkdir -p /ark/backup
-mkdir -p /ark/saves/main
 mkdir -p /ark/server/staging
-mkdir -p /ark/config/instances
 mkdir -p /home/steam/.config/arkmanager
+mkdir -p /ark/server/install/ShooterGame/Saved/Config/LinuxServer
 
 cp -n /home/steam/arkmanager.cfg /ark/config/arkmanager.cfg
-cp -n /home/steam/instance.cfg /ark/config/instances/main.cfg
 cp -n /home/steam/crontab /ark/config/crontab
 
 # Copy over default configs if not found in container config folder
@@ -61,6 +56,11 @@ cp -n /home/steam/crontab /ark/config/crontab
 (envsubst < /ark/config/arkmanager.cfg) > /ark/config/arkmanager.cfg.temp
 mv /ark/config/arkmanager.cfg.temp /ark/config/arkmanager.cfg
 
+[[ "$MASTER" -eq 1 ]] && touch /ark/.master
+
+lastModUpdate=$(stat --printf="%Y\n" /ark/server/install/ShooterGame/Content/Mods/* | sort -nr | head -n 1)
+echo "$lastModUpdate" > /ark/.arkmodlastcheck
+
 if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ];then
 	echo "No game files found. Installing..."
 	mkdir -p /ark/server/install/ShooterGame/Content/Mods
@@ -70,35 +70,15 @@ if [ ! -d /ark/server/install  ] || [ ! -f /ark/server/install/PackageInfo.bin ]
 	# Create mod dir
 fi
 
-# Generate all necessary shallow instances
-rm -Rf /ark/server/instances
-mkdir -p /ark/server/instances
-ark-create-all-shallows
-
-# linking main save
-rm -Rf /ark/server/install/ShooterGame/Saved
-ln -s /ark/saves/main /ark/server/install/ShooterGame/Saved
-
-#copying the actual configs
-echo "Copying the config files..."
-[[ -f /ark/config/Game.ini ]] && cp /ark/config/Game.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/Game.ini
-[[ -f /ark/config/GameUserSettings.ini ]] && cp /ark/config/GameUserSettings.ini /ark/server/install/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
-
-# Get instances info
-ls -l /home/steam/.config/arkmanager/instances/
-arkmanager list-instances
-mapfile -t instances < <( /usr/local/bin/arkmanager list-instances --brief )
-echo "Found ${#instances[@]} instances"
-
 if [[ "${BACKUPONSTART}" -eq 1 ]] && [ "$(ls -A /ark/server/install/ShooterGame/Saved/)" ]; then
 	echo "[Backup]"
-	arkmanager backup @all
+	arkmanager backup
 fi
 
 
 # Launching ark server
 if [[ "$UPDATEONSTART" -eq 0 ]]; then
-	arkmanager start @all --noautoupdate
+	arkmanager start --noautoupdate
 else
   arkupdate
 fi

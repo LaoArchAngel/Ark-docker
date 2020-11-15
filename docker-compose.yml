@@ -1,26 +1,66 @@
-ark:
-  container_name: ark
-  image: boerngenschmidt/ark-docker
-  environment:
-    - SESSIONNAME=Ark Docker
-    - SERVERMAP=TheIsland
-    - MAX_PLAYERS=70
-    - SERVERPASSWORD="" 
-    - ADMINPASSWORD=adminpassword
-    - SERVERPORT=27015
-    - STEAMPORT=7778
-    - BACKUPONSTART=1
-    - BACKUPONSTOP=1
-    - WARNONSTOP=1
-    - UPDATEONSTART=1
-    - TZ=UTC
-    - ARK_GID=1000
-    - ARK_UID=1000
-  volumes:
-    - /my/path/to/ark:/ark
-  ports:
-   - 7778:7778/udp
-   - 7778:7778
-   - 27015:27015/udp
-   - 27015:27015
-   - 32330:32330
+version: '3'
+
+services:
+  island:
+    container_name: ark_island
+    image: boerngenschmidt/ark-docker
+    environment:
+      MASTER: 1
+      INSTANCE_NAME: island
+      SESSIONNAME: Ark Docker
+      SERVERMAP: TheIsland
+      MAX_PLAYERS: 70
+      SERVERPASSWORD: ""
+      ADMINPASSWORD: adminpassword
+      SERVERPORT: 27015
+      STEAMPORT: 7777
+      BACKUPONSTART: 1
+      BACKUPONSTOP: 1
+      WARNONSTOP: 1
+      UPDATEONSTART: 1
+      TZ: UTC
+      ARK_GID: 1000
+      ARK_UID: 1000
+    volumes:
+      - arkserver:/ark/server/install
+      - arkcluster:ark/server/install/ShooterGame/Saved/clusters
+      - ./configs/island/server:/ark/server/install/ShooterGame/Saved/Config/LinuxServer
+      - ./configs/island/manager:/ark/config
+      - ./log:/ark/log
+      - ./backup:/ark/backup
+    ports:
+      - "7777-7778:7777-7778"
+      - "7777-7778:7777-7778/udp"
+      - "27015-27016:27015-27016"
+      - "27015-27016:27015-27016/udp"
+    restart: unless-stopped
+  scorched:
+    container_name: ark_se
+    image: boerngenschmidt/ark-docker
+    environment:
+      MASTER: 0
+      INSTANCE_NAME: scorched
+      SESSIONNAME: "Ark Docker: SE"
+      SERVERMAP: ScorchedEarth_P
+      SERVERPORT: 27017
+      STEAMPORT: 7779
+      BACKUPONSTART: 1
+      BACKUPONSTOP: 1
+      WARNONSTOP: 1
+      UPDATEONSTART: 1
+      TZ: UTC
+      ARK_GID: 1000
+      ARK_UID: 1000
+    volumes:
+      - arkserver:/ark/server/install
+      - arkcluster:ark/server/install/ShooterGame/Saved/clusters
+      - ./configs/se/server:/ark/server/install/ShooterGame/Saved/Config/LinuxServer
+      - ./configs/se/manager:/ark/config
+      - ./log:/ark/log
+      - ./backup:/ark/backup
+    ports:
+      - "7779-7780:7779-7780"
+      - "7779-7780:7779-7780/udp"
+      - "27017-27018:27017-27018"
+      - "27017-27018:27017-27018/udp"
+    restart: unless-stopped

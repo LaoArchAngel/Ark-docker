@@ -9,7 +9,9 @@ ENV SERVERPASSWORD="" \
     WARNONSTOP=1 \
     ARK_UID=1000 \
     ARK_GID=1000 \
-    TZ=UTC
+    TZ=UTC \
+    MASTER=0 \
+    INSTANCE_NAME="main"
 
 ## Install dependencies
 RUN dnf clean packages
@@ -55,9 +57,19 @@ RUN mkdir /ark \
 # Define default config file in /etc/arkmanager
 COPY arkmanager-system.cfg /etc/arkmanager/arkmanager.cfg
 
+# Intended to be the install share.  Only a master container will update this.
+VOLUME /ark/server/install
+# Intended to be unique for each container.  Contains all save information.
+VOLUME /ark/server/install/ShooterGame/Saved
+# Intended to be shared.  Contains the cluster files for transfers.  Should be a volume.
+VOLUME /ark/server/install/ShooterGame/Saved/clusters
+# Intended to be unique for each container.  Contains configuration.  Good candidate for a bind.
+VOLUME /ark/server/install/ShooterGame/Saved/Config/LinuxServer
+# Intended to be unique for each container.  Contains configuration of arkmanager.  Good candidate for a bind.
 VOLUME /ark/config
-VOLUME /ark/saves
+# Can be shared as long as the instance name is different.  Should be bound.
 VOLUME /ark/backup
+# Can be shared as long as the instance name is different.  Should be bound.
 VOLUME /ark/log
 
 
@@ -68,14 +80,6 @@ WORKDIR /ark
 ## Startup Scripts ##
 COPY run.sh /home/steam/run.sh
 COPY user.sh /home/steam/user.sh
-COPY --chown=steam:steam ark-create-all-shallows.sh ark-create-shallow.sh ark-gen-shallow.sh ark-set-shallow-save.sh check-shallow-ark.sh /home/steam/
-
-RUN chmod +x /home/steam/ark-create-all-shallows.sh /home/steam/ark-create-shallow.sh /home/steam/ark-gen-shallow.sh /home/steam/ark-set-shallow-save.sh /home/steam/check-shallow-ark.sh
-RUN ln -sT /home/steam/ark-create-all-shallows.sh /usr/local/bin/ark-create-all-shallows \
-  && ln -sT /home/steam/ark-create-shallow.sh /usr/local/bin/ark-create-shallow \
-  && ln -sT /home/steam/ark-gen-shallow.sh /usr/local/bin/ark-gen-shallow \
-  && ln -sT /home/steam/ark-set-shallow-save.sh  /usr/local/bin/ark-set-shallow-save \
-  && ln -sT /home/steam/check-shallow-ark.sh  /usr/local/bin/check-shallow-ark
 
 RUN chmod 777 /home/steam/run.sh \
  && chmod 777 /home/steam/user.sh
